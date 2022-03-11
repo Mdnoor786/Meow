@@ -33,8 +33,9 @@ async def _(event):
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     required_file_name = (
-        Config.TMP_DOWNLOAD_DIRECTORY + " " + str(datetime.datetime.now()) + ".webp"
+        f"{Config.TMP_DOWNLOAD_DIRECTORY} {str(datetime.datetime.now())}" + ".webp"
     )
+
     img = Image.new("RGBA", (350, 220), color=(0, 0, 0, 115))
     fnt = ImageFont.truetype(FONT_FILE_TO_USE, 30)
     drawn_text = ImageDraw.Draw(img)
@@ -48,7 +49,7 @@ async def _(event):
     os.remove(required_file_name)
     end = datetime.datetime.now()
     time_taken_ms = (end - start).seconds
-    await event.edit("Created sticker in {} seconds".format(time_taken_ms))
+    await event.edit(f"Created sticker in {time_taken_ms} seconds")
     await asyncio.sleep(3)
     await event.delete()
 

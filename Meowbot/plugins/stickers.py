@@ -270,7 +270,6 @@ async def kang(args):
 async def resize_photo(photo):
     """Resize the given photo to 512x512"""
     image = Image.open(photo)
-    maxsize = (512, 512)
     if (image.width and image.height) < 512:
         size1 = image.width
         size2 = image.height
@@ -287,6 +286,7 @@ async def resize_photo(photo):
         sizenew = (size1new, size2new)
         image = image.resize(sizenew)
     else:
+        maxsize = (512, 512)
         image.thumbnail(maxsize)
 
     return image
@@ -400,7 +400,6 @@ async def _(event):
         return
     reply_message = await event.get_reply_message()
     Meow = event.pattern_match.group(1)
-    chat = "@Stickers"
     reply_message.sender
     if reply_message.sender.bot:
         await edit_or_reply(event, "`Reply to actual user's message.`")
@@ -409,12 +408,13 @@ async def _(event):
     if Meow == "":
         await event.edit("**🤧 Nashe me hai kya lawde**")
     else:
+        chat = "@Stickers"
         async with bot.conversation(chat) as conv:
             try:
                 response = conv.wait_event(
                     events.NewMessage(incoming=True, from_users=429000)
                 )
-                await conv.send_message(f"/editsticker")
+                await conv.send_message("/editsticker")
                 await conv.get_response()
                 await asyncio.sleep(2)
                 await bot.forward_messages(chat, reply_message)
@@ -474,10 +474,11 @@ async def sticklet(event):
 
     await event.client.send_message(
         event.chat_id,
-        "{}".format(sticktext),
+        f"{sticktext}",
         file=image_stream,
         reply_to=event.message.reply_to_msg_id,
     )
+
     try:
         os.remove(FONT_FILE)
     except:
@@ -512,9 +513,10 @@ async def waifu(animu):
     await sticcers[0].click(
         animu.chat_id,
         reply_to=animu.reply_to_msg_id,
-        silent=True if animu.is_reply else False,
+        silent=bool(animu.is_reply),
         hide_via=True,
     )
+
     await animu.delete()
 
 

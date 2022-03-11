@@ -65,9 +65,9 @@ async def purgeme(delme):
         await message.delete()
 
     smsg = await delme.client.send_message(
-        delme.chat_id,
-        "**Self Purge Complete!** Purged  `" + str(count) + "`  messages.",
+        delme.chat_id, f"**Self Purge Complete!** Purged  `{count}`  messages."
     )
+
     await delme.client.send_message(
         lg_id, "#PURGE \nSelf Purged  `" + str(count) + "`  messages."
     )

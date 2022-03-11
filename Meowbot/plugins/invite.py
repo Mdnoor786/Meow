@@ -50,25 +50,17 @@ async def get_chatinfo(event):
 def user_full_name(user):
     names = [user.first_name, user.last_name]
     names = [i for i in list(names) if i]
-    full_name = " ".join(names)
-    return full_name
+    return " ".join(names)
 
 
 @bot.on(mew_cmd(pattern=r"inviteall ?(.*)"))
 @bot.on(sudo_cmd(pattern=r"inviteall ?(.*)", allow_sudo=True))
 async def get_users(event):
-    sender = await event.get_sender()
-    me = await event.client.get_me()
-    if not sender.id == me.id:
-        Meow = await eor(event, "`processing...`")
-    else:
-        Meow = await eor(event, "`processing...`")
+    await event.get_sender()
+    await event.client.get_me()
+    Meow = await eor(event, "`processing...`")
     me_ow = event.pattern_match.group(1)
     if me_ow == "@MeowUbChat":
-        return await Meow.edit("Restricted to invite users from there.")
-    elif me_ow == "@MeowUbChat":
-        return await Meow.edit("Restricted to invite users from there.")
-    elif me_ow == "@MeowUbChat":
         return await Meow.edit("Restricted to invite users from there.")
     mew = await get_chatinfo(event)
     chat = await event.get_chat()

@@ -21,9 +21,7 @@ if not os.path.isdir("./temp"):
 async def _(Meow):
     if Meow.fwd_from:
         return
-    reply_to_id = Meow.message.id
-    if Meow.reply_to_msg_id:
-        reply_to_id = Meow.reply_to_msg_id
+    reply_to_id = Meow.reply_to_msg_id or Meow.message.id
     event = await eor(Meow, "Converting.....")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
@@ -56,9 +54,7 @@ async def _(Meow):
 async def _(Meow):
     if Meow.fwd_from:
         return
-    reply_to_id = Meow.message.id
-    if Meow.reply_to_msg_id:
-        reply_to_id = Meow.reply_to_msg_id
+    reply_to_id = Meow.reply_to_msg_id or Meow.message.id
     event = await eor(Meow, "Converting.....")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
@@ -238,19 +234,18 @@ async def _(event):
     else:
         end = datetime.datetime.now()
         ms = (end - start).seconds
-        await event.edit(
-            "Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms)
-        )
+        await event.edit(f"Downloaded to `{downloaded_file_name}` in {ms} seconds.")
         new_required_file_name = ""
         new_required_file_caption = ""
         command_to_run = []
         voice_note = False
         supports_streaming = False
         if input_str == "voice":
-            new_required_file_caption = "voice_" + str(round(time.time())) + ".opus"
+            new_required_file_caption = f"voice_{str(round(time.time()))}.opus"
             new_required_file_name = (
-                Config.TMP_DOWNLOAD_DIRECTORY + "/" + new_required_file_caption
+                f"{Config.TMP_DOWNLOAD_DIRECTORY}/{new_required_file_caption}"
             )
+
             command_to_run = [
                 "ffmpeg",
                 "-i",
@@ -268,10 +263,11 @@ async def _(event):
             voice_note = True
             supports_streaming = True
         elif input_str == "mp3":
-            new_required_file_caption = "mp3_" + str(round(time.time())) + ".mp3"
+            new_required_file_caption = f"mp3_{str(round(time.time()))}.mp3"
             new_required_file_name = (
-                Config.TMP_DOWNLOAD_DIRECTORY + "/" + new_required_file_caption
+                f"{Config.TMP_DOWNLOAD_DIRECTORY}/{new_required_file_caption}"
             )
+
             command_to_run = [
                 "ffmpeg",
                 "-i",

@@ -5,71 +5,71 @@ import requests
 from . import *
 
 
-@bot.on(mew_cmd(pattern=f"love$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"love$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="love$", outgoing=True))
+@bot.on(sudo_cmd(pattern="love$", allow_sudo=True))
 async def love(e):
     txt = random.choice(LOVESTR)
     await eor(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"dhoka$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"dhoka$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="dhoka$", outgoing=True))
+@bot.on(sudo_cmd(pattern="dhoka$", allow_sudo=True))
 async def katgya(e):
     txt = random.choice(DHOKA)
     await eor(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"metoo$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"metoo$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="metoo$", outgoing=True))
+@bot.on(sudo_cmd(pattern="metoo$", allow_sudo=True))
 async def metoo(e):
     txt = random.choice(METOOSTR)
     await eor(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"gdnoon$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"gdnoon$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="gdnoon$", outgoing=True))
+@bot.on(sudo_cmd(pattern="gdnoon$", allow_sudo=True))
 async def noon(e):
     txt = random.choice(GDNOON)
     await eor(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"chase$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"chase$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="chase$", outgoing=True))
+@bot.on(sudo_cmd(pattern="chase$", allow_sudo=True))
 async def police(e):
     txt = random.choice(CHASE_STR)
     await eor(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"congo$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"congo$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="congo$", outgoing=True))
+@bot.on(sudo_cmd(pattern="congo$", allow_sudo=True))
 async def Sahih(e):
     txt = random.choice(CONGRATULATION)
     await eor(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"qhi$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"qhi$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="qhi$", outgoing=True))
+@bot.on(sudo_cmd(pattern="qhi$", allow_sudo=True))
 async def hoi(e):
     txt = random.choice(HELLOSTR)
     await eor(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"gdbye$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"gdbye$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="gdbye$", outgoing=True))
+@bot.on(sudo_cmd(pattern="gdbye$", allow_sudo=True))
 async def bhago(e):
     txt = random.choice(BYESTR)
     await eor(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"gdnyt$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"gdnyt$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="gdnyt$", outgoing=True))
+@bot.on(sudo_cmd(pattern="gdnyt$", allow_sudo=True))
 async def night(e):
     txt = random.choice(GDNIGHT)
     await eor(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"gdmng$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"gdmng$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="gdmng$", outgoing=True))
+@bot.on(sudo_cmd(pattern="gdmng$", allow_sudo=True))
 async def morning(e):
     txt = random.choice(GDMORNING)
     await eor(e, txt)
@@ -81,17 +81,16 @@ async def quote_search(event):
     if event.fwd_from:
         return
     Meow = await eor(event, "`Processing...`")
-    input_str = event.pattern_match.group(1)
-    if not input_str:
-        api_url = "https://quotes.cwprojects.live/random"
-        try:
-            response = requests.get(api_url).json()
-        except:
-            response = None
-    else:
+    if input_str := event.pattern_match.group(1):
         api_url = f"https://quotes.cwprojects.live/search/query={input_str}"
         try:
             response = random.choice(requests.get(api_url).json())
+        except:
+            response = None
+    else:
+        api_url = "https://quotes.cwprojects.live/random"
+        try:
+            response = requests.get(api_url).json()
         except:
             response = None
     if response is not None:

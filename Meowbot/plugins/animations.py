@@ -74,22 +74,19 @@ async def _(message):
     h = [(u[0], u[1], u[2]), (u[0], u[1], ""), (u[0], "", "")]
     for something in reversed(
         [
-            y
-            for y in (
-                [
-                    "".join(x)
-                    for x in (
-                        f + (s, g, s + s * f.count(""), t),
-                        f + (g, s * 2 + s * f.count(""), t),
-                        f[:i] + (o, f[i], s * 2 + s * f.count(""), t),
-                        f[:i] + (s + s * f.count(""), o, f[i], s, t),
-                        f[:i] + (s * 2 + s * f.count(""), o, f[i], t),
-                        f[:i] + (s * 3 + s * f.count(""), o, t),
-                        f[:i] + (s * 3 + s * f.count(""), g, t),
-                    )
-                ]
-                for i, f in enumerate(reversed(h))
-            )
+            [
+                "".join(x)
+                for x in (
+                    f + (s, g, s + s * f.count(""), t),
+                    f + (g, s * 2 + s * f.count(""), t),
+                    f[:i] + (o, f[i], s * 2 + s * f.count(""), t),
+                    f[:i] + (s + s * f.count(""), o, f[i], s, t),
+                    f[:i] + (s * 2 + s * f.count(""), o, f[i], t),
+                    f[:i] + (s * 3 + s * f.count(""), o, t),
+                    f[:i] + (s * 3 + s * f.count(""), g, t),
+                )
+            ]
+            for i, f in enumerate(reversed(h))
         ]
     ):
         for something_else in something:
@@ -225,8 +222,8 @@ async def _(event):
         await event.edit(animation_chars[i % 12])
 
 
-@bot.on(mew_cmd(pattern=f"hack$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"hack$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="hack$", outgoing=True))
+@bot.on(sudo_cmd(pattern="hack$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -337,8 +334,8 @@ async def _(event):
     await event.edit("Wo DeGi TuM eKbAr MaNg KaR tOh DeKhO😄")
 
 
-@bot.on(mew_cmd(pattern=f"nehi$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"nehi$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="nehi$", outgoing=True))
+@bot.on(sudo_cmd(pattern="nehi$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -381,7 +378,7 @@ async def _(event):
 
     animation_interval = 0.5
 
-    animation_ttl = range(0, 101)
+    animation_ttl = range(101)
 
     await eor(event, "phub")
 
@@ -413,7 +410,7 @@ async def _(event):
 
     animation_interval = 0.5
 
-    animation_ttl = range(0, 101)
+    animation_ttl = range(101)
 
     await eor(event, "amore")
 
@@ -444,7 +441,7 @@ async def _(event):
 
     animation_interval = 0.5
 
-    animation_ttl = range(0, 101)
+    animation_ttl = range(101)
 
     await eor(event, "Sexy")
 
@@ -474,7 +471,7 @@ async def ammastar(mewstar):
 
     animation_interval = 2
 
-    animation_ttl = range(0, 11)
+    animation_ttl = range(11)
 
     await eor(mewstar, "I am A Star")
 
@@ -560,7 +557,7 @@ async def _(event):
 
     animation_interval = 0.5
 
-    animation_ttl = range(0, 11)
+    animation_ttl = range(11)
 
     #  input_str = event.pattern_match.group(1)
 
@@ -727,7 +724,7 @@ async def _(event):
         await event.edit(animation_chars[i % 36])
 
 
-@bot.on(mew_cmd(pattern=f"snake$", outgoing=True))
+@bot.on(mew_cmd(pattern="snake$", outgoing=True))
 @bot.on(sudo_cmd(pattern="snake$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
@@ -769,7 +766,7 @@ async def _(event):
         await event.edit(animation_chars[i % 27])
 
 
-@bot.on(mew_cmd(pattern=f"human$", outgoing=True))
+@bot.on(mew_cmd(pattern="human$", outgoing=True))
 @bot.on(sudo_cmd(pattern="human$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
@@ -800,7 +797,7 @@ async def _(event):
         await event.edit(animation_chars[i % 16])
 
 
-@bot.on(mew_cmd(pattern=f"mc$", outgoing=True))
+@bot.on(mew_cmd(pattern="mc$", outgoing=True))
 @bot.on(sudo_cmd(pattern="mc$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
@@ -933,7 +930,7 @@ async def _(event):
         await event.edit(animation_chars[i % 30])
 
 
-@bot.on(mew_cmd(pattern=f"nikal$", outgoing=True))
+@bot.on(mew_cmd(pattern="nikal$", outgoing=True))
 @bot.on(sudo_cmd(pattern="nikal$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
@@ -954,7 +951,7 @@ async def _(event):
         await event.edit(animation_chars[i % 6])
 
 
-@bot.on(mew_cmd(pattern=f"music$", outgoing=True))
+@bot.on(mew_cmd(pattern="music$", outgoing=True))
 @bot.on(sudo_cmd(pattern="music$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
@@ -980,7 +977,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@bot.on(mew_cmd(pattern=f"squ$", outgoing=True))
+@bot.on(mew_cmd(pattern="squ$", outgoing=True))
 @bot.on(sudo_cmd(pattern="squ$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:

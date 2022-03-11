@@ -77,7 +77,7 @@ async def _(event):
     else:
         async with bot.conversation(fbot) as conv:
             try:
-                await conv.send_message("/fedstat " + lavde)
+                await conv.send_message(f"/fedstat {lavde}")
                 await asyncio.sleep(4)
                 response = await conv.get_response()
                 await asyncio.sleep(2)
@@ -98,7 +98,7 @@ async def _(event):
         try:
             await conv.send_message("/start")
             await conv.get_response()
-            await conv.send_message("/fedinfo " + lavde)
+            await conv.send_message(f"/fedinfo {lavde}")
             massive = await conv.get_response()
             await Meow.edit(massive.text + "\n\n**ʟɛɢɛռɖaʀʏ_ᴀғ_ʍɛօաɮօȶ**")
         except YouBlockedUserError:

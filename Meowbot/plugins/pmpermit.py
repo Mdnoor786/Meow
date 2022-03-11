@@ -87,9 +87,8 @@ if PM_ON_OFF != "DISABLE":
             return
         if str(event.chat_id) in DEVLIST:
             return
-        if not pm_sql.is_approved(event.chat_id):
-            if not event.chat_id in PM_WARNS:
-                pm_sql.approve(event.chat_id, "outgoing")
+        if not pm_sql.is_approved(event.chat_id) and event.chat_id not in PM_WARNS:
+            pm_sql.approve(event.chat_id, "outgoing")
 
     @bot.on(mew_cmd(pattern="(a|approve|allow)$"))
     async def approve(event):
@@ -108,9 +107,7 @@ if PM_ON_OFF != "DISABLE":
                     del PREV_REPLY_MESSAGE[event.chat_id]
                 pm_sql.approve(event.chat_id, "Approved")
                 await event.edit(
-                    "Approved to pm [{}](tg://user?id={})".format(
-                        firstname, event.chat_id
-                    )
+                    f"Approved to pm [{firstname}](tg://user?id={event.chat_id})"
                 )
                 await asyncio.sleep(3)
                 await event.delete()
@@ -128,10 +125,9 @@ if PM_ON_OFF != "DISABLE":
                 firstname = replied_user.user.first_name
                 pm_sql.approve(reply_s.sender_id, "Approved")
                 await event.edit(
-                    "Approved to pm [{}](tg://user?id={})".format(
-                        firstname, reply_s.sender_id
-                    )
+                    f"Approved to pm [{firstname}](tg://user?id={reply_s.sender_id})"
                 )
+
                 await asyncio.sleep(3)
                 await event.delete()
             elif pm_sql.is_approved(reply_s.sender_id):
@@ -155,10 +151,9 @@ if PM_ON_OFF != "DISABLE":
             if pm_sql.is_approved(event.chat_id):
                 pm_sql.disapprove(event.chat_id)
                 await event.edit(
-                    "Disapproved User [{}](tg://user?id={})".format(
-                        firstname, event.chat_id
-                    )
+                    f"Disapproved User [{firstname}](tg://user?id={event.chat_id})"
                 )
+
                 await asyncio.sleep(3)
                 await event.delete()
             elif not pm_sql.is_approved(event.chat_id):
@@ -180,10 +175,9 @@ if PM_ON_OFF != "DISABLE":
                 firstname = replied_user.user.first_name
                 pm_sql.disapprove(reply_s.sender_id)
                 await event.edit(
-                    "Disapproved User [{}](tg://user?id={})".format(
-                        firstname, reply_s.sender_id
-                    )
+                    f"Disapproved User [{firstname}](tg://user?id={reply_s.sender_id})"
                 )
+
                 await asyncio.sleep(3)
                 await event.delete()
             elif not pm_sql.is_approved(reply_s.sender_id):
@@ -262,8 +256,7 @@ if PM_ON_OFF != "DISABLE":
             if chat_ids in PREV_REPLY_MESSAGE:
                 await PREV_REPLY_MESSAGE[chat_ids].delete()
             PREV_REPLY_MESSAGE[chat_ids] = r
-            the_message = ""
-            the_message += "#BLOCK\n\n"
+            the_message = "" + "#BLOCK\n\n"
             the_message += f"[User](tg://user?id={chat_ids}): {chat_ids}\n"
             the_message += f"Message Counts: {PM_WARNS[chat_ids]}\n"
             try:

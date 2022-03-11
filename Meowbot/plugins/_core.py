@@ -11,9 +11,7 @@ from . import *
 async def kk(event):
     if event.fwd_from:
         return
-    reply_to_id = event.message.id
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
+    reply_to_id = event.reply_to_msg_id or event.message.id
     cmd = "ls Meowbot/plugins"
     thumb = mew_logo
     process = await asyncio.create_subprocess_shell(
@@ -51,7 +49,7 @@ async def send(event):
     thumb = mew_logo
     input_str = event.pattern_match.group(1)
     omk = f"**• Plugin name ≈** `{input_str}`\n**• Uploaded by ≈** {mew_mention}\n\n⚡ **[ʟɛɢɛռɖaʀʏ ᴀғ ʍɛօաɮօȶ]({chnl_link})** ⚡"
-    the_plugin_file = "./Meowbot/plugins/{}.py".format(input_str)
+    the_plugin_file = f"./Meowbot/plugins/{input_str}.py"
     if os.path.exists(the_plugin_file):
         lauda = await event.client.send_file(
             event.chat_id,
@@ -94,7 +92,7 @@ async def install(event):
                         (os.path.basename(downloaded_file_name))
                     )
                     for i in CMD_LIST[shortname]:
-                        string += "  •  `" + i
+                        string += f"  •  `{i}"
                         string += "`\n"
                         if b == 1:
                             a = "__Installing..__"
@@ -116,8 +114,9 @@ async def install(event):
                 os.remove(downloaded_file_name)
                 return await eod(
                     event,
-                    f"**Failed to Install** \n`Error`\nModule already installed or unknown format",
+                    "**Failed to Install** \\n`Error`\\nModule already installed or unknown format",
                 )
+
         except Exception as e:
             await eod(event, f"**Failed to Install** \n`Error`\n{str(e)}")
             return os.remove(downloaded_file_name)

@@ -48,15 +48,12 @@ async def _(event):
                 mewevent,
                 "Can you kindly disable your forward privacy settings for good?",
             )
+        elif response.text.startswith("Select"):
+            await eod(mewevent, "`Please go to` @DrWebBot `and select your language.`")
         else:
-            if response.text.startswith("Select"):
-                await eod(
-                    mewevent, "`Please go to` @DrWebBot `and select your language.`"
-                )
-            else:
-                await mewevent.edit(
-                    f"**Antivirus scan was completed. I got the final results.**\n\n {response.message.message}"
-                )
+            await mewevent.edit(
+                f"**Antivirus scan was completed. I got the final results.**\n\n {response.message.message}"
+            )
 
 
 @bot.on(mew_cmd(pattern=r"decode$", outgoing=True))
@@ -74,9 +71,10 @@ async def parseqr(qr_e):
         "-X",
         "POST",
         "-F",
-        "f=@" + downloaded_file_name + "",
+        f"f=@{downloaded_file_name}",
         "https://zxing.org/w/decode",
     ]
+
     process = await asyncio.create_subprocess_exec(
         *command_to_exec,
         # stdout must a pipe to be accessible as process.stdout
@@ -119,9 +117,7 @@ async def _(event):
             m_list = None
             with open(downloaded_file_name, "rb") as fd:
                 m_list = fd.readlines()
-            message = ""
-            for m in m_list:
-                message += m.decode("UTF-8") + "\r\n"
+            message = "".join(m.decode("UTF-8") + "\r\n" for m in m_list)
             os.remove(downloaded_file_name)
         else:
             message = previous_message.message
@@ -143,7 +139,7 @@ async def _(event):
         return
     end = datetime.datetime.now()
     ms = (end - start).seconds
-    await mewevent.edit("Created BarCode in {} seconds🤓".format(ms))
+    await mewevent.edit(f"Created BarCode in {ms} seconds🤓")
     await asyncio.sleep(5)
     await mewevent.delete()
 
@@ -164,9 +160,7 @@ async def make_qr(makeqr):
             m_list = None
             with open(downloaded_file_name, "rb") as file:
                 m_list = file.readlines()
-            message = ""
-            for media in m_list:
-                message += media.decode("UTF-8") + "\r\n"
+            message = "".join(media.decode("UTF-8") + "\r\n" for media in m_list)
             os.remove(downloaded_file_name)
         else:
             message = previous_message.message
@@ -200,9 +194,8 @@ async def _(event):
         yyyy = input_sgra[0]
         mm = input_sgra[1]
         dd = input_sgra[2]
-        required_url = "https://calendar.kollavarsham.org/api/years/{}/months/{}/days/{}?lang={}".format(
-            yyyy, mm, dd, "en"
-        )
+        required_url = f"https://calendar.kollavarsham.org/api/years/{yyyy}/months/{mm}/days/{dd}?lang=en"
+
         headers = {"Accept": "application/json"}
         response_content = requests.get(required_url, headers=headers).json()
         a = ""
@@ -230,17 +223,15 @@ async def _(event):
             number = float(input_sgra[0])
             currency_from = input_sgra[1].upper()
             currency_to = input_sgra[2].upper()
-            request_url = "https://api.exchangeratesapi.io/latest?base={}".format(
-                currency_from
-            )
+            request_url = f"https://api.exchangeratesapi.io/latest?base={currency_from}"
             current_response = requests.get(request_url).json()
             if currency_to in current_response["rates"]:
                 current_rate = float(current_response["rates"][currency_to])
                 rebmun = round(number * current_rate, 2)
                 await edit_or_reply(
-                    event,
-                    "{} {} = {} {}".format(number, currency_from, rebmun, currency_to),
+                    event, f"{number} {currency_from} = {rebmun} {currency_to}"
                 )
+
             else:
                 await edit_or_reply(
                     event,
@@ -263,9 +254,10 @@ async def currencylist(ups):
     request_url = "https://api.exchangeratesapi.io/latest?base=USD"
     current_response = requests.get(request_url).json()
     dil_wale_puch_de_na_chaaa = current_response["rates"]
-    hmm = ""
-    for key, value in dil_wale_puch_de_na_chaaa.items():
-        hmm += f"`{key}`" + "\t\t\t"
+    hmm = "".join(
+        f"`{key}`" + "\t\t\t" for key, value in dil_wale_puch_de_na_chaaa.items()
+    )
+
     await eor(ups, f"**List of some currencies:**\n{hmm}\n")
 
 
@@ -275,7 +267,7 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    url = "https://ifsc.razorpay.com/{}".format(input_str)
+    url = f"https://ifsc.razorpay.com/{input_str}"
     r = requests.get(url)
     if r.status_code == 200:
         b = r.json()
@@ -283,7 +275,7 @@ async def _(event):
         # https://stackoverflow.com/a/9105132/4723940
         await eor(event, str(a))
     else:
-        await eor(event, "`{}`: {}".format(input_str, r.text))
+        await eor(event, f"`{input_str}`: {r.text}")
 
 
 @bot.on(mew_cmd(pattern="color (.*)"))
@@ -343,14 +335,14 @@ async def _(event):
     if xkcd_id is None:
         xkcd_url = "https://xkcd.com/info.0.json"
     else:
-        xkcd_url = "https://xkcd.com/{}/info.0.json".format(xkcd_id)
+        xkcd_url = f"https://xkcd.com/{xkcd_id}/info.0.json"
     r = requests.get(xkcd_url)
     if r.ok:
         data = r.json()
         year = data.get("year")
         month = data["month"].zfill(2)
         day = data["day"].zfill(2)
-        xkcd_link = "https://xkcd.com/{}".format(data.get("num"))
+        xkcd_link = f'https://xkcd.com/{data.get("num")}'
         safe_title = data.get("safe_title")
         data.get("transcript")
         alt = data.get("alt")
@@ -367,7 +359,7 @@ Year: {}""".format(
         )
         await mewevent.edit(output_str, link_preview=True)
     else:
-        await eod(mewevent, "xkcd n.{} not found!".format(xkcd_id))
+        await eod(mewevent, f"xkcd n.{xkcd_id} not found!")
 
 
 @bot.on(mew_cmd(pattern="dns (.*)", outgoing=True))
@@ -376,9 +368,8 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/dns/{}".format(input_str)
-    response_api = requests.get(sample_url).text
-    if response_api:
+    sample_url = f"https://da.gd/dns/{input_str}"
+    if response_api := requests.get(sample_url).text:
         await eor(
             event,
             "DNS records of [This link]({}) are \n{}".format(
@@ -400,9 +391,8 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/s?url={}".format(input_str)
-    response_api = requests.get(sample_url).text
-    if response_api:
+    sample_url = f"https://da.gd/s?url={input_str}"
+    if response_api := requests.get(sample_url).text:
         await eor(
             event,
             f"**Generated  [short link]({response_api})** \n**Long link :** [here]({input_str})",
@@ -419,7 +409,7 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     if not input_str.startswith("http"):
-        input_str = "http://" + input_str
+        input_str = f"http://{input_str}"
     r = requests.get(input_str, allow_redirects=False)
     if str(r.status_code).startswith("3"):
         await eor(
@@ -431,9 +421,7 @@ async def _(event):
     else:
         await eod(
             event,
-            "Input URL [short link]({}) returned status_code {}".format(
-                input_str, r.status_code
-            ),
+            f"Input URL [short link]({input_str}) returned status_code {r.status_code}",
         )
 
 

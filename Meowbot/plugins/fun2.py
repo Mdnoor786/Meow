@@ -178,7 +178,7 @@ async def _(event):
     if event.fwd_from:
         return
     animation_interval = 3
-    animation_ttl = range(0, 103)
+    animation_ttl = range(103)
     await eor(event, "Starting asf")
     animation_chars = [
         "1 ❤️ love story",
@@ -225,7 +225,7 @@ async def pressf(f):
         for line in F_LENGTHS:
             c = max(round(line / len(arg)), 1)
             out += (arg * c) + "\n"
-        await eor(f"`" + out + "`")
+        await eor(f"`{out}`")
 
 
 @bot.on(mew_cmd(pattern="session$", outgoing=True))
@@ -242,8 +242,7 @@ async def _(event):
 async def payf(event):
     if event.fwd_from:
         return
-    input_str = event.pattern_match.group(1)
-    if input_str:
+    if input_str := event.pattern_match.group(1):
         paytext = input_str
         pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
             paytext * 8,
@@ -319,7 +318,7 @@ CmdHelp("fun2").add_command("join", None, "Use and see").add_command(
 ).add_command(
     "fact", None, "Sends you some random facts"
 ).add_command(
-    "ftext", "<text>", "Writes your text in " f" format"
+    "ftext", "<text>", "Writes your text in "
 ).add_info(
     "Bakchodi h bass."
 ).add_warning(

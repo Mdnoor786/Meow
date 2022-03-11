@@ -13,9 +13,8 @@ from Meowbot.utils import *
 ENV = bool(os.environ.get("ENV", False))
 if ENV:
     from Meowbot.config import Config
-else:
-    if os.path.exists("Config.py"):
-        from Config import Development as Config
+elif os.path.exists("Config.py"):
+    from Config import Development as Config
 
 
 # load plugins
@@ -26,16 +25,16 @@ def load_module(shortname):
         import Meowbot.utils
 
         path = Path(f"Meowbot/plugins/{shortname}.py")
-        name = "Meowbot.plugins.{}".format(shortname)
+        name = f"Meowbot.plugins.{shortname}"
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        LOGS.info("MeowBot - Successfully imported " + shortname)
+        LOGS.info(f"MeowBot - Successfully imported {shortname}")
     else:
         import Meowbot.utils
 
         path = Path(f"Meowbot/plugins/{shortname}.py")
-        name = "Meowbot.plugins.{}".format(shortname)
+        name = f"Meowbot.plugins.{shortname}"
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         mod.bot = bot
@@ -60,8 +59,8 @@ def load_module(shortname):
         sys.modules["userbot.events"] = Meowbot
         spec.loader.exec_module(mod)
         # for imports
-        sys.modules["Meowbot.plugins." + shortname] = mod
-        LOGS.info("⚡ ℳêøաɮøƚ ⚡ - Successfully Imported " + shortname)
+        sys.modules[f"Meowbot.plugins.{shortname}"] = mod
+        LOGS.info(f"⚡ ℳêøաɮøƚ ⚡ - Successfully Imported {shortname}")
 
 
 # remove plugins

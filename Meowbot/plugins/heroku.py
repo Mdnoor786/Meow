@@ -89,16 +89,12 @@ async def variable(Meow):
                 if Config.ABUSE == "ON":
                     await bot.send_file(Meow.chat_id, cjb, caption=cap)
                     await event.delete()
-                    await bot.send_message(
-                        lg_id, f"#HEROKU_VAR \n\n`{heroku_var[variable]}`"
-                    )
-                    return
                 else:
                     await event.edit(f"**{capn}**")
-                    await bot.send_message(
-                        lg_id, f"#HEROKU_VAR \n\n`{heroku_var[variable]}`"
-                    )
-                    return
+                await bot.send_message(
+                    lg_id, f"#HEROKU_VAR \n\n`{heroku_var[variable]}`"
+                )
+                return
             if variable in heroku_var:
                 return await event.edit(
                     "**Heroku Var** :" f"\n\n`{variable}` = `{heroku_var[variable]}`\n"
@@ -157,11 +153,10 @@ async def variable(Meow):
         except IndexError:
             return await event.edit("`Please specify ConfigVars you want to delete`")
         await asyncio.sleep(1.5)
-        if variable in heroku_var:
-            await event.edit(f"**Successfully Deleted** \n`{variable}`")
-            del heroku_var[variable]
-        else:
+        if variable not in heroku_var:
             return await event.edit(f"`{variable}`  **does not exists**")
+        await event.edit(f"**Successfully Deleted** \n`{variable}`")
+        del heroku_var[variable]
 
 
 @bot.on(mew_cmd(pattern="usage(?: |$)", outgoing=True))
@@ -181,7 +176,7 @@ async def dyno_usage(Meow):
         "Authorization": f"Bearer {Config.HEROKU_API_KEY}",
         "Accept": "application/vnd.heroku+json; version=3.account-quotas",
     }
-    path = "/accounts/" + user_id + "/actions/get-quota"
+    path = f"/accounts/{user_id}/actions/get-quota"
     r = requests.get(heroku_api + path, headers=headers)
     if r.status_code != 200:
         return await event.edit(

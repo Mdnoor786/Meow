@@ -34,9 +34,8 @@ async def yardim(event):
     tgbotusername = Config.BOT_USERNAME
     input_str = event.pattern_match.group(1)
     try:
-        if not input_str == "":
-            if input_str in CMD_HELP:
-                await eor(event, str(CMD_HELP[args]))
+        if input_str != "" and input_str in CMD_HELP:
+            await eor(event, str(CMD_HELP[args]))
     except:
         pass
     if tgbotusername is not None:
@@ -57,8 +56,7 @@ async def yardim(event):
 async def mewbott(event):
     if event.fwd_from:
         return
-    args = event.pattern_match.group(1).lower()
-    if args:
+    if args := event.pattern_match.group(1).lower():
         if args in CMD_HELP:
             await eor(event, str(CMD_HELP[args]))
         else:
@@ -71,13 +69,10 @@ async def mewbott(event):
         ]
 
         for i in sayfa:
-            string += f"`▶️ `"
+            string += "`▶️ `"
             for sira, a in enumerate(i):
-                string += "`" + str(a)
-                if sira == i.index(i[-1]):
-                    string += "`"
-                else:
-                    string += "`, "
+                string += f"`{str(a)}"
+                string += "`" if sira == i.index(i[-1]) else "`, "
             string += "\n"
         await eod(
             event,

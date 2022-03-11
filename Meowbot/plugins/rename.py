@@ -9,7 +9,7 @@ from telethon.tl.types import DocumentAttributeVideo
 
 from . import *
 
-thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+thumb_image_path = f"{Config.TMP_DOWNLOAD_DIRECTORY}/thumb_image.jpg"
 
 
 def get_video_thumb(file, output=None, width=90):
@@ -24,7 +24,7 @@ def get_video_thumb(file, output=None, width=90):
                 int((0, metadata.get("duration").seconds)[metadata.has("duration")] / 2)
             ),
             "-filter:v",
-            "scale={}:-1".format(width),
+            f"scale={width}:-1",
             "-vframes",
             "1",
             output,
@@ -32,6 +32,7 @@ def get_video_thumb(file, output=None, width=90):
         stdout=subprocess.PIPE,
         stderr=subprocess.DEVNULL,
     )
+
     if not p.returncode and os.path.lexists(file):
         return output
 
@@ -60,9 +61,7 @@ async def _(event):
         end = datetime.datetime.now()
         ms = (end - start).seconds
         if os.path.exists(downloaded_file_name):
-            await Meow.edit(
-                "Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms)
-            )
+            await Meow.edit(f"Downloaded to `{downloaded_file_name}` in {ms} seconds.")
         else:
             await eod(Meow, "Error Occurred\n {}".format(input_str))
     else:
@@ -74,9 +73,7 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
-    thumb = None
-    if os.path.exists(thumb_image_path):
-        thumb = thumb_image_path
+    thumb = thumb_image_path if os.path.exists(thumb_image_path) else None
     Meow = await eor(event, "Renaming And Uploading File...")
     input_str = event.pattern_match.group(1)
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
@@ -107,15 +104,14 @@ async def _(event):
             os.remove(downloaded_file_name)
             ms_two = (end_two - end).seconds
             await Meow.edit(
-                "Downloaded in {} seconds. Uploaded in {} seconds.".format(
-                    ms_one, ms_two
-                )
+                f"Downloaded in {ms_one} seconds. Uploaded in {ms_two} seconds."
             )
+
         else:
-            await eod(event, "File Not Found {}".format(input_str))
+            await eod(event, f"File Not Found {input_str}")
     else:
         await Meow.edit(
-            "Syntax // `{}rnupload file.name` as reply to a Telegram media".format(hl)
+            f"Syntax // `{hl}rnupload file.name` as reply to a Telegram media"
         )
 
 
@@ -141,7 +137,6 @@ async def _(event):
         end_one = datetime.datetime.now()
         ms_one = (end_one - start).seconds
         if os.path.exists(downloaded_file_name):
-            thumb = None
             if not downloaded_file_name.endswith((".mkv", ".mp4", ".mp3", ".flac")):
                 await eor(
                     event,
@@ -150,17 +145,18 @@ async def _(event):
                     ),
                 )
                 return False
+            thumb = None
             if os.path.exists(thumb_image_path):
                 thumb = thumb_image_path
             else:
                 thumb = get_video_thumb(downloaded_file_name, thumb_image_path)
             start = datetime.datetime.now()
             metadata = extractMetadata(createParser(downloaded_file_name))
-            duration = 0
             width = 0
             height = 0
-            if metadata.has("duration"):
-                duration = metadata.get("duration").seconds
+            duration = (
+                metadata.get("duration").seconds if metadata.has("duration") else 0
+            )
             if os.path.exists(thumb_image_path):
                 metadata = extractMetadata(createParser(thumb_image_path))
                 if metadata.has("width"):
@@ -194,12 +190,11 @@ async def _(event):
                 os.remove(downloaded_file_name)
                 ms_two = (end - end_one).seconds
                 await Meow.edit(
-                    "Downloaded in {} seconds. Uploaded in {} seconds.".format(
-                        ms_one, ms_two
-                    )
+                    f"Downloaded in {ms_one} seconds. Uploaded in {ms_two} seconds."
                 )
+
         else:
-            await eod(Meow, "File Not Found {}".format(input_str))
+            await eod(Meow, f"File Not Found {input_str}")
     else:
         await Meow.edit("Syntax // .rnsupload file.name as reply to a Telegram media")
 

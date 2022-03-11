@@ -42,7 +42,7 @@ async def nope(mew):
     await troll[0].click(
         mew.chat_id,
         reply_to=mew.reply_to_msg_id,
-        silent=True if mew.is_reply else False,
+        silent=bool(mew.is_reply),
         hide_via=True,
     )
 
@@ -53,13 +53,10 @@ async def nope(mew):
 @bot.on(sudo_cmd(pattern="song(?: |$)(.*)", allow_sudo=True))
 async def download_video(v_url):
     lazy = v_url
-    sender = await lazy.get_sender()
-    me = await lazy.client.get_me()
+    await lazy.get_sender()
+    await lazy.client.get_me()
 
-    if not sender.id == me.id:
-        rkp = await eor(lazy, "`Wait. Processing your request....`")
-    else:
-        rkp = await eor(lazy, "`Wait. Processing your request....`")
+    rkp = await eor(lazy, "`Wait. Processing your request....`")
     url = v_url.pattern_match.group(1)
     if not url:
         return await eod(rkp, f"**Error** \n__Usage:__ `{hl}song <song name>`")
@@ -176,12 +173,9 @@ async def download_video(v_url):
 @bot.on(sudo_cmd(pattern="vsong(?: |$)(.*)", allow_sudo=True))
 async def download_video(v_url):
     lazy = v_url
-    sender = await lazy.get_sender()
-    me = await lazy.client.get_me()
-    if not sender.id == me.id:
-        rkp = await eor(lazy, "Processing video song request....")
-    else:
-        rkp = await eor(lazy, "Processing video song request....")
+    await lazy.get_sender()
+    await lazy.client.get_me()
+    rkp = await eor(lazy, "Processing video song request....")
     url = v_url.pattern_match.group(1)
     if not url:
         return await eod(rkp, f"**Error** \n__Usage:__ `{hl}vsong <song name>`")

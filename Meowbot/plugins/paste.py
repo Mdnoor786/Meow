@@ -39,9 +39,7 @@ async def _(event):
         input_str = input_str.replace(ext[0], "").strip()
     except IndexError:
         extension = None
-    text_to_print = ""
-    if input_str:
-        text_to_print = input_str
+    text_to_print = input_str or ""
     if text_to_print == "" and reply.media:
         mediatype = media_type(reply)
         if mediatype == "Document":
@@ -63,10 +61,7 @@ async def _(event):
     try:
         response = await pasty(text_to_print, extension)
         if "error" in response:
-            return await eod(
-                evnt,
-                f"**Error While Pasting Text !!**",
-            )
+            return await eod(evnt, "**Error While Pasting Text !!**")
         result = f"<b>📍 Pasted To <a href={response['url']}>Here</a></b>"
         if response["raw"] != "":
             result += f"\n<b>📃 Raw link: <a href={response['raw']}>Raw</a></b>"
@@ -108,7 +103,7 @@ async def get_dogbin_content(dog_url):
         )
         return
     except exceptions.Timeout as TimeoutErr:
-        await eod(Meow, "Request timed out." + str(TimeoutErr))
+        await eod(Meow, f"Request timed out.{str(TimeoutErr)}")
         return
     except exceptions.TooManyRedirects as RedirectsErr:
         await eod(
@@ -149,18 +144,14 @@ async def _(event):
             m_list = None
             with open(downloaded_file_name, "rb") as fd:
                 m_list = fd.readlines()
-            message = ""
-            for m in m_list:
-                # message += m.decode("UTF-8") + "\r\n"
-                message += m.decode("UTF-8")
+            message = "".join(m.decode("UTF-8") for m in m_list)
             os.remove(downloaded_file_name)
         else:
             message = previous_message.message
     else:
         message = f"SYNTAX: `{hl}neko <long text to include>`"
     if downloaded_file_name.endswith(".py"):
-        py_file = ""
-        py_file += ".py"
+        py_file = "" + ".py"
         data = message
         key = (
             requests.post("https://nekobin.com/api/documents", json={"content": data})
