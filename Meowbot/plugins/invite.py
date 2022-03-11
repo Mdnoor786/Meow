@@ -56,8 +56,8 @@ def user_full_name(user):
 @bot.on(mew_cmd(pattern=r"inviteall ?(.*)"))
 @bot.on(sudo_cmd(pattern=r"inviteall ?(.*)", allow_sudo=True))
 async def get_users(event):
-    sender = await event.get_sender()
-    me = await event.client.get_me()
+    await event.get_sender()
+    await event.client.get_me()
     Meow = await eor(event, "`processing...`")
     me_ow = event.pattern_match.group(1)
     if me_ow == "@MeowUbChat":

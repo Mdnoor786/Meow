@@ -9,7 +9,7 @@ from telethon.tl.types import DocumentAttributeVideo
 
 from . import *
 
-thumb_image_path = f'{Config.TMP_DOWNLOAD_DIRECTORY}/thumb_image.jpg'
+thumb_image_path = f"{Config.TMP_DOWNLOAD_DIRECTORY}/thumb_image.jpg"
 
 
 def get_video_thumb(file, output=None, width=90):
@@ -21,12 +21,7 @@ def get_video_thumb(file, output=None, width=90):
             file,
             "-ss",
             str(
-                int(
-                    (0, metadata.get("duration").seconds)[
-                        metadata.has("duration")
-                    ]
-                    / 2
-                )
+                int((0, metadata.get("duration").seconds)[metadata.has("duration")] / 2)
             ),
             "-filter:v",
             f"scale={width}:-1",
@@ -159,7 +154,9 @@ async def _(event):
             metadata = extractMetadata(createParser(downloaded_file_name))
             width = 0
             height = 0
-            duration = metadata.get("duration").seconds if metadata.has("duration") else 0
+            duration = (
+                metadata.get("duration").seconds if metadata.has("duration") else 0
+            )
             if os.path.exists(thumb_image_path):
                 metadata = extractMetadata(createParser(thumb_image_path))
                 if metadata.has("width"):

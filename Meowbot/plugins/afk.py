@@ -181,7 +181,9 @@ async def set_not_night(event):
     current_message = event.message.message
     if ".night" not in current_message and "yes" in USER_night:
         try:
-            await bot.send_message(Config.LOGGER_ID, "#NIGHT \\n\\nNight Mode :  **TRUE**")
+            await bot.send_message(
+                Config.LOGGER_ID, "#NIGHT \\n\\nNight Mode :  **TRUE**"
+            )
         except Exception as e:
             await bot.send_message(
                 event.chat_id,

@@ -46,7 +46,6 @@ async def nope(mew):
         hide_via=True,
     )
 
-
     await mew.delete()
 
 
@@ -54,8 +53,8 @@ async def nope(mew):
 @bot.on(sudo_cmd(pattern="song(?: |$)(.*)", allow_sudo=True))
 async def download_video(v_url):
     lazy = v_url
-    sender = await lazy.get_sender()
-    me = await lazy.client.get_me()
+    await lazy.get_sender()
+    await lazy.client.get_me()
 
     rkp = await eor(lazy, "`Wait. Processing your request....`")
     url = v_url.pattern_match.group(1)
@@ -174,8 +173,8 @@ async def download_video(v_url):
 @bot.on(sudo_cmd(pattern="vsong(?: |$)(.*)", allow_sudo=True))
 async def download_video(v_url):
     lazy = v_url
-    sender = await lazy.get_sender()
-    me = await lazy.client.get_me()
+    await lazy.get_sender()
+    await lazy.client.get_me()
     rkp = await eor(lazy, "Processing video song request....")
     url = v_url.pattern_match.group(1)
     if not url:

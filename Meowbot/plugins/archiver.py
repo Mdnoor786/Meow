@@ -13,8 +13,8 @@ from telethon.tl.types import DocumentAttributeVideo
 
 from . import *
 
-thumb_image_path = f'{Config.TMP_DOWNLOAD_DIRECTORY}/thumb_image.jpg'
-extracted = f'{Config.TMP_DOWNLOAD_DIRECTORY}extracted/'
+thumb_image_path = f"{Config.TMP_DOWNLOAD_DIRECTORY}/thumb_image.jpg"
+extracted = f"{Config.TMP_DOWNLOAD_DIRECTORY}extracted/"
 if not os.path.isdir(extracted):
     os.makedirs(extracted)
 
@@ -41,13 +41,13 @@ async def _(event):
             await edit_or_reply(event, directory_name)
         except Exception as e:  # pylint:disable=C0103,W0703
             await mone.edit(str(e))
-    zipfile.ZipFile(f'{directory_name}.zip', "w", zipfile.ZIP_DEFLATED).write(
+    zipfile.ZipFile(f"{directory_name}.zip", "w", zipfile.ZIP_DEFLATED).write(
         directory_name
     )
 
     await bot.send_file(
         event.chat_id,
-        f'{directory_name}.zip',
+        f"{directory_name}.zip",
         caption="**Zipped!**",
         force_document=True,
         allow_cache=False,
@@ -92,13 +92,13 @@ async def _(event):
             await event.edit(directory_name)
         except Exception as e:  # pylint:disable=C0103,W0703
             await mone.edit(str(e))
-    zipfile.ZipFile(f'{directory_name}.zip', "w", zipfile.ZIP_DEFLATED).write(
+    zipfile.ZipFile(f"{directory_name}.zip", "w", zipfile.ZIP_DEFLATED).write(
         directory_name
     )
 
     await bot.send_file(
         event.chat_id,
-        f'{directory_name}.zip',
+        f"{directory_name}.zip",
         caption="Zipped By MeowBot",
         force_document=True,
         allow_cache=False,
@@ -142,14 +142,14 @@ async def _(event):
             await event.edit("creating rar archive, please wait..")
             # patoolib.create_archive(directory_name + '.7z',directory_name)
             patoolib.create_archive(
-                f'{directory_name}.rar',
+                f"{directory_name}.rar",
                 (directory_name, Config.TMP_DOWNLOAD_DIRECTORY),
             )
 
             # patoolib.create_archive("/content/21.yy Avrupa (1).pdf.zip",("/content/21.yy Avrupa (1).pdf","/content/"))
             await bot.send_file(
                 event.chat_id,
-                f'{directory_name}.rar',
+                f"{directory_name}.rar",
                 caption="rarred By MeowBot",
                 force_document=True,
                 allow_cache=False,
@@ -157,7 +157,7 @@ async def _(event):
             )
 
             try:
-                os.remove(f'{directory_name}.rar')
+                os.remove(f"{directory_name}.rar")
                 os.remove(directory_name)
             except:
                 pass
@@ -196,14 +196,14 @@ async def _(event):
             await event.edit("creating 7z archive, please wait..")
             # patoolib.create_archive(directory_name + '.7z',directory_name)
             patoolib.create_archive(
-                f'{directory_name}.7z',
+                f"{directory_name}.7z",
                 (directory_name, Config.TMP_DOWNLOAD_DIRECTORY),
             )
 
             # patoolib.create_archive("/content/21.yy Avrupa (1).pdf.zip",("/content/21.yy Avrupa (1).pdf","/content/"))
             await bot.send_file(
                 event.chat_id,
-                f'{directory_name}.7z',
+                f"{directory_name}.7z",
                 caption="7z archived By MeowBot",
                 force_document=True,
                 allow_cache=False,
@@ -211,7 +211,7 @@ async def _(event):
             )
 
             try:
-                os.remove(f'{directory_name}.7z')
+                os.remove(f"{directory_name}.7z")
                 os.remove(directory_name)
             except:
                 pass
@@ -338,7 +338,9 @@ async def _(event):
         else:
             end = datetime.datetime.now()
             ms = (end - start).seconds
-            await mone.edit(f"Stored the zip to `{downloaded_file_name}` in {ms} seconds.")
+            await mone.edit(
+                f"Stored the zip to `{downloaded_file_name}` in {ms} seconds."
+            )
 
         with zipfile.ZipFile(downloaded_file_name, "r") as zip_ref:
             zip_ref.extractall(extracted)
@@ -430,7 +432,9 @@ async def _(event):
         else:
             end = datetime.datetime.now()
             ms = (end - start).seconds
-            await mone.edit(f"Stored the rar to `{downloaded_file_name}` in {ms} seconds.")
+            await mone.edit(
+                f"Stored the rar to `{downloaded_file_name}` in {ms} seconds."
+            )
 
         patoolib.extract_archive(downloaded_file_name, outdir=extracted)
         filename = sorted(get_lst_of_files(extracted, []))
@@ -504,8 +508,8 @@ async def _(event):
     mone = await event.edit("Processing ...")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
-    extracted = f'{Config.TMP_DOWNLOAD_DIRECTORY}extracted/'
-    thumb_image_path = f'{Config.TMP_DOWNLOAD_DIRECTORY}/thumb_image.jpg'
+    extracted = f"{Config.TMP_DOWNLOAD_DIRECTORY}extracted/"
+    thumb_image_path = f"{Config.TMP_DOWNLOAD_DIRECTORY}/thumb_image.jpg"
     if not os.path.isdir(extracted):
         os.makedirs(extracted)
     if event.reply_to_msg_id:
@@ -525,7 +529,9 @@ async def _(event):
         else:
             end = datetime.datetime.now()
             ms = (end - start).seconds
-            await mone.edit(f"Stored the tar to `{downloaded_file_name}` in {ms} seconds.")
+            await mone.edit(
+                f"Stored the tar to `{downloaded_file_name}` in {ms} seconds."
+            )
         with tarfile.TarFile.open(downloaded_file_name, "r") as tar_file:
             tar_file.extractall(path=extracted)
         # tf = tarfile.open(downloaded_file_name)

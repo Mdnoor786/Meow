@@ -65,9 +65,7 @@ async def git_commit(file_name, Meowbot):
     file_name = file_name.replace("./userbot/temp/", "")
     print(file_name)
     try:
-        repo.create_file(
-            file_name, "Uploaded New Plugin", commit_data, branch="master"
-        )
+        repo.create_file(file_name, "Uploaded New Plugin", commit_data, branch="master")
         print("Committed File")
         ccess = Config.GIT_REPO_NAME
         ccess = ccess.strip()

@@ -23,8 +23,8 @@ async def _(event):
     await eor(event, typing_symbol)
     await asyncio.sleep(DELAY_BETWEEN_EDITS)
     for character in input_str:
-        previous_text = f'{previous_text}{character}'
-        typing_text = f'{previous_text}{typing_symbol}'
+        previous_text = f"{previous_text}{character}"
+        typing_text = f"{previous_text}{typing_symbol}"
         try:
             await eor(event, typing_text)
         except Exception as e:

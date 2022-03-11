@@ -73,13 +73,19 @@ def button(page, modules):
         for pairs in pairs[page]
     ]
 
-    buttons.append([custom.Button.inline(
+    buttons.append(
+        [
+            custom.Button.inline(
                 f"◀️ Back {mew_emoji}",
                 data=f"page({(max_pages - 1) if page == 0 else (page - 1)})",
-            ), custom.Button.inline("• 🔙 •", data="close"), custom.Button.inline(
+            ),
+            custom.Button.inline("• 🔙 •", data="close"),
+            custom.Button.inline(
                 f"{mew_emoji} Next ▶️",
                 data=f"page({0 if page == (max_pages - 1) else page + 1})",
-            )])
+            ),
+        ]
+    )
     return [max_pages, buttons]
 
 
@@ -189,7 +195,6 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
                     ],
                 ],
             )
-
 
         elif query.startswith("http"):
             part = query.split(" ")

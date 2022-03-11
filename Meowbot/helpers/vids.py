@@ -19,7 +19,7 @@ async def thumb_from_audio(audio_path, output):
 # take a frame from video
 async def take_screen_shot(video_file, output_directory, ttl):
     # https://stackoverflow.com/a/13891070/4723940
-    out_put_file_name = f'{output_directory}/{str(time.time())}.jpg'
+    out_put_file_name = f"{output_directory}/{str(time.time())}.jpg"
     file_genertor_command = [
         "ffmpeg",
         "-ss",
@@ -51,7 +51,7 @@ async def take_screen_shot(video_file, output_directory, ttl):
 # trim vids
 async def cult_small_video(video_file, output_directory, start_time, end_time):
     # https://stackoverflow.com/a/13891070/4723940
-    out_put_file_name = f'{output_directory}/{str(round(time.time()))}.mp4'
+    out_put_file_name = f"{output_directory}/{str(round(time.time()))}.mp4"
     file_genertor_command = [
         "ffmpeg",
         "-i",

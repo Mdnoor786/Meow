@@ -20,7 +20,7 @@ class CmdHelp:
         self.FILE = file
         self.ORIGINAL_FILE = file
         self.IS_OFFICIAL = official
-        self.FILE_NAME = f'{file}.py' if file_name is None else file_name
+        self.FILE_NAME = f"{file}.py" if file_name is None else file_name
         self.COMMANDS = {}
         self.FILE_AUTHOR = ""
         self.WARNING = ""

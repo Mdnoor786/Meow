@@ -33,8 +33,7 @@ async def _(event):
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     required_file_name = (
-        f'{Config.TMP_DOWNLOAD_DIRECTORY} {str(datetime.datetime.now())}'
-        + ".webp"
+        f"{Config.TMP_DOWNLOAD_DIRECTORY} {str(datetime.datetime.now())}" + ".webp"
     )
 
     img = Image.new("RGBA", (350, 220), color=(0, 0, 0, 115))

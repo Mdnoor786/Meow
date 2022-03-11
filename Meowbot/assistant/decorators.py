@@ -33,8 +33,8 @@ def is_admin():
         async def wrapper(event):
             Meowbot = bot.tgbot
             perms = await Meowbot.get_permissions(event.chat_id, event.sender_id)
-            user = event.sender_id
-            ForGo10 = bot.uid
+            event.sender_id
+            bot.uid
             if perms.is_admin:
                 await func(event)
             if not perms.is_admin:

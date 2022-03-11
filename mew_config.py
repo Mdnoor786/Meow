@@ -10,8 +10,6 @@ import os
 from telethon.tl.types import ChatBannedRights
 
 
-
-
 class Config(object):
     LOGGER = True
     ABUSE = os.environ.get("ABUSE", None)
@@ -27,7 +25,7 @@ class Config(object):
     AUTH_TOKEN_DATA = os.environ.get("AUTH_TOKEN_DATA", None)
     if AUTH_TOKEN_DATA != None:
         os.makedirs(TMP_DOWNLOAD_DIRECTORY)
-        with open(f'{TMP_DOWNLOAD_DIRECTORY}auth_token.txt', "w") as t_file:
+        with open(f"{TMP_DOWNLOAD_DIRECTORY}auth_token.txt", "w") as t_file:
             t_file.write(AUTH_TOKEN_DATA)
     BIO_MSG = os.environ.get("BIO_MSG", "ʟɛɢɛռɖaʀʏ ᴀғ ʍɛօաɮօȶ")
     BL_CHAT = {int(x) for x in os.environ.get("BL_CHAT", "").split()}
@@ -106,7 +104,6 @@ class Config(object):
     WEATHER_API = os.environ.get("WEATHER_API", None)
     YOUR_NAME = os.environ.get("YOUR_NAME", None)
     YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
-
 
 
 class Production(Config):

@@ -160,7 +160,7 @@ async def set_default_city(city):
     if "," in CITY:
         newcity = CITY.split(",")
         if len(newcity[1]) == 2:
-            CITY = f'{newcity[0].strip()},{newcity[1].strip()}'
+            CITY = f"{newcity[0].strip()},{newcity[1].strip()}"
         else:
             country = await get_tz((newcity[1].strip()).title())
             try:
@@ -168,7 +168,7 @@ async def set_default_city(city):
             except KeyError:
                 await edit_or_reply(city, "`Invalid country.`")
                 return
-            CITY = f'{newcity[0].strip()},{countrycode.strip()}'
+            CITY = f"{newcity[0].strip()},{countrycode.strip()}"
     url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={APPID}"
     request = requests.get(url)
     result = json.loads(request.text)

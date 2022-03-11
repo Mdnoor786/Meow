@@ -106,7 +106,9 @@ if PM_ON_OFF != "DISABLE":
                     await PREV_REPLY_MESSAGE[event.chat_id].delete()
                     del PREV_REPLY_MESSAGE[event.chat_id]
                 pm_sql.approve(event.chat_id, "Approved")
-                await event.edit(f"Approved to pm [{firstname}](tg://user?id={event.chat_id})")
+                await event.edit(
+                    f"Approved to pm [{firstname}](tg://user?id={event.chat_id})"
+                )
                 await asyncio.sleep(3)
                 await event.delete()
             elif pm_sql.is_approved(event.chat_id):

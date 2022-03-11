@@ -75,7 +75,7 @@ async def _(event):
     if event.reply_to_msg_id:
         await bot.send_message(chat_id, hunter)
         await eod(event, "**[Done]**")
-    msg = "".join(f'{i} ' for i in c[1:])
+    msg = "".join(f"{i} " for i in c[1:])
     if msg == "":
         return
     try:

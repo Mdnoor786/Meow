@@ -105,11 +105,7 @@ async def tiny_pic_spam(e):
     try:
         counter = int(e.pattern_match.group(1).split(" ", 1)[0])
         reply_message = await e.get_reply_message()
-        if (
-            not reply_message
-            or not e.reply_to_msg_id
-            or not reply_message.media
-        ):
+        if not reply_message or not e.reply_to_msg_id or not reply_message.media:
             return await e.edit("```Reply to a pic/sticker/gif/video message```")
         message = reply_message.media
         for _ in range(1, counter):

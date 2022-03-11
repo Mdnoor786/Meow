@@ -49,9 +49,7 @@ async def _(event):
                 "Can you kindly disable your forward privacy settings for good?",
             )
         elif response.text.startswith("Select"):
-            await eod(
-                mewevent, "`Please go to` @DrWebBot `and select your language.`"
-            )
+            await eod(mewevent, "`Please go to` @DrWebBot `and select your language.`")
         else:
             await mewevent.edit(
                 f"**Antivirus scan was completed. I got the final results.**\n\n {response.message.message}"
@@ -257,8 +255,7 @@ async def currencylist(ups):
     current_response = requests.get(request_url).json()
     dil_wale_puch_de_na_chaaa = current_response["rates"]
     hmm = "".join(
-        f"`{key}`" + "\t\t\t"
-        for key, value in dil_wale_puch_de_na_chaaa.items()
+        f"`{key}`" + "\t\t\t" for key, value in dil_wale_puch_de_na_chaaa.items()
     )
 
     await eor(ups, f"**List of some currencies:**\n{hmm}\n")

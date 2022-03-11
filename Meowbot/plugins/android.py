@@ -20,21 +20,20 @@ async def _(magisk):
         return
     magisk_repo = "https://raw.githubusercontent.com/topjohnwu/magisk_files/"
     magisk_dict = {
-        "⦁ **Stable**": f'{magisk_repo}master/stable.json',
-        "⦁ **Beta**": f'{magisk_repo}master/beta.json',
-        "⦁ **Canary**": f'{magisk_repo}canary/canary.json',
+        "⦁ **Stable**": f"{magisk_repo}master/stable.json",
+        "⦁ **Beta**": f"{magisk_repo}master/beta.json",
+        "⦁ **Canary**": f"{magisk_repo}canary/canary.json",
     }
 
     releases = "**Latest Magisk Releases**\n\n"
     for name, release_url in magisk_dict.items():
         data = get(release_url).json()
         if "canary" in release_url:
-            data["app"]["link"] = f'{magisk_repo}canary/' + data["app"]["link"]
-            data["magisk"]["link"] = f'{magisk_repo}canary/' + data["magisk"]["link"]
+            data["app"]["link"] = f"{magisk_repo}canary/" + data["app"]["link"]
+            data["magisk"]["link"] = f"{magisk_repo}canary/" + data["magisk"]["link"]
             data["uninstaller"]["link"] = (
-                f'{magisk_repo}canary/' + data["uninstaller"]["link"]
+                f"{magisk_repo}canary/" + data["uninstaller"]["link"]
             )
-
 
         releases += (
             f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | '
@@ -108,8 +107,7 @@ async def codename_info(request):
     if results := [
         i
         for i in devices
-        if i["name"].lower() == device.lower()
-        or i["model"].lower() == device.lower()
+        if i["name"].lower() == device.lower() or i["model"].lower() == device.lower()
     ]:
         reply = f"**Search results for {brand} {device}**:\n\n"
         if len(results) > 8:
