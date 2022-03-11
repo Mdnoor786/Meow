@@ -73,11 +73,10 @@ async def nope(mew):
     if not Meow:
         if mew.is_reply:
             (await mew.get_reply_message()).message
+        elif Config.ABUSE == "ON":
+            return await eor(mew, "Abe chumtiye kuch likhne ke liye de")
         else:
-            if Config.ABUSE == "ON":
-                return await eor(mew, "Abe chumtiye kuch likhne ke liye de")
-            else:
-                return await eor(mew, "Doge need some text to make sticker.")
+            return await eor(mew, "Doge need some text to make sticker.")
 
     troll = await bot.inline_query("DogeStickerBot", f"{(deEmojify(Meow))}")
     if troll:
@@ -101,11 +100,10 @@ async def nope(mew):
     if not Meow:
         if mew.is_reply:
             (await mew.get_reply_message()).message
+        elif Config.ABUSE == "ON":
+            return await eor(mew, "Abe chumtiye kuch likhne ke liye de")
         else:
-            if Config.ABUSE == "ON":
-                return await eor(mew, "Abe chumtiye kuch likhne ke liye de")
-            else:
-                return await eor(mew, "Doge need some text to make sticker.")
+            return await eor(mew, "Doge need some text to make sticker.")
 
     troll = await bot.inline_query("GooglaxBot", f"{(deEmojify(Meow))}")
     if troll:

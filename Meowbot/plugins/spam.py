@@ -13,7 +13,7 @@ async def spammer(e):
         message = e.text
         counter = int(message[6:8])
         spam_message = str(e.text[8:])
-        await asyncio.wait([e.respond(spam_message) for i in range(counter)])
+        await asyncio.wait([e.respond(spam_message) for _ in range(counter)])
         await e.delete()
         await e.client.send_message(
             lg_id, f"#SPAM \n\nSpammed  `{counter}`  messages!!"
@@ -23,20 +23,18 @@ async def spammer(e):
 @bot.on(mew_cmd(pattern="bigspam"))
 @bot.on(sudo_cmd(pattern="bigspam", allow_sudo=True))
 async def bigspam(Meow):
-    if not Meow.text[0].isalpha() and Meow.text[0] not in ("/", "#", "@", "!"):
-        mew_msg = Meow.text
-        mewbot_count = int(mew_msg[9:13])
-        reply_msg = await Meow.get_reply_message()
-        if reply_msg:
-            mew_spam = reply_msg
-        else:
-            mew_spam = str(Meow.text[13:])
-        for i in range(1, mewbot_count):
-            await Meow.respond(mew_spam)
-        await Meow.delete()
-        await Meow.client.send_message(
-            lg_id, f"#BIGSPAM \n\nBigspammed  `{mew_count}`  messages !!"
-        )
+    if Meow.text[0].isalpha() or Meow.text[0] in ("/", "#", "@", "!"):
+        return
+    mew_msg = Meow.text
+    mewbot_count = int(mew_msg[9:13])
+    reply_msg = await Meow.get_reply_message()
+    mew_spam = reply_msg or str(Meow.text[13:])
+    for _ in range(1, mewbot_count):
+        await Meow.respond(mew_spam)
+    await Meow.delete()
+    await Meow.client.send_message(
+        lg_id, f"#BIGSPAM \n\nBigspammed  `{mew_count}`  messages !!"
+    )
 
 
 @bot.on(mew_cmd("dspam (.*)"))
@@ -59,10 +57,7 @@ async def spammer(e):
 async def _(event):
     reply_msg = await event.get_reply_message()
     Meow = event.pattern_match.group(1)
-    if reply_msg:
-        input_str = reply_msg
-    else:
-        input_str = Meow
+    input_str = reply_msg or Meow
     await bot.send_message(
         lg_id,
         f"#UNLIMITED_SPAM \n\nStarted Unlimited Spam. Will spam till floodwait. Do `{hl}restart` to stop.",
@@ -77,27 +72,25 @@ async def _(event):
 @bot.on(mew_cmd(pattern="bspam ?(.*)"))
 @bot.on(sudo_cmd(pattern="bspam ?(.*)", allow_sudo=True))
 async def spammer(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        message = e.text
-        counter = int(message[7:11])
-        reply_msg = await e.get_reply_message()
-        if reply_msg:
-            spam_message = reply_msg
-        else:
-            spam_message = str(e.text[12:])
-        rd = int(counter % 100)
-        tot = int((counter - rd) / 100)
-        a = 30
-        for q in range(tot):
-            for p in range(100):
-                await asyncio.wait([e.respond(spam_message)])
-            a = a + 2
-            await asyncio.sleep(a)
+    if e.text[0].isalpha() or e.text[0] in ("/", "#", "@", "!"):
+        return
+    message = e.text
+    counter = int(message[7:11])
+    reply_msg = await e.get_reply_message()
+    spam_message = reply_msg or str(e.text[12:])
+    rd = int(counter % 100)
+    tot = int((counter - rd) / 100)
+    a = 30
+    for _ in range(tot):
+        for _ in range(100):
+            await asyncio.wait([e.respond(spam_message)])
+        a = a + 2
+        await asyncio.sleep(a)
 
-        await e.delete()
-        await e.client.send_message(
-            lg_id, f"#BREAK_SPAM \n\nSpammed  {counter}  messages!!"
-        )
+    await e.delete()
+    await e.client.send_message(
+        lg_id, f"#BREAK_SPAM \n\nSpammed  {counter}  messages!!"
+    )
 
 
 @bot.on(mew_cmd(pattern="mspam (.*)"))
@@ -116,11 +109,10 @@ async def tiny_pic_spam(e):
             not reply_message
             or not e.reply_to_msg_id
             or not reply_message.media
-            or not reply_message.media
         ):
             return await e.edit("```Reply to a pic/sticker/gif/video message```")
         message = reply_message.media
-        for i in range(1, counter):
+        for _ in range(1, counter):
             await e.client.send_file(e.chat_id, message)
     except:
         return await e.reply(

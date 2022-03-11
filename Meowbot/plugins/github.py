@@ -37,9 +37,7 @@ async def download(event):
         end = datetime.now()
         ms = (end - start).seconds
         await event.delete()
-        await Meowbot.edit(
-            "Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms)
-        )
+        await Meowbot.edit(f"Downloaded to `{downloaded_file_name}` in {ms} seconds.")
         await Meowbot.edit("Committing to Github....")
         await git_commit(downloaded_file_name, Meowbot)
 
@@ -61,26 +59,24 @@ async def git_commit(file_name, Meowbot):
         create_file = True
         if i == 'ContentFile(path="' + file_name + '")':
             return await Meowbot.edit("`File Already Exists`")
-            create_file = False
-    file_name = "Meowbot/plugins/" + file_name
-    if create_file == True:
-        file_name = file_name.replace("./userbot/temp/", "")
-        print(file_name)
-        try:
-            repo.create_file(
-                file_name, "Uploaded New Plugin", commit_data, branch="master"
-            )
-            print("Committed File")
-            ccess = Config.GIT_REPO_NAME
-            ccess = ccess.strip()
-            await Meowbot.edit(
-                f"`Commited On Your Github Repo`\n\n[Your STDPLUGINS](https://github.com/{ccess}/tree/master/userbot/plugins/)"
-            )
-        except:
-            print("Cannot Create Plugin")
-            await eod(Meowbot, "Cannot Upload Plugin")
-    else:
+    file_name = f"Meowbot/plugins/{file_name}"
+    if create_file != True:
         return await eod(Meowbot, "`Committed Suicide`")
+    file_name = file_name.replace("./userbot/temp/", "")
+    print(file_name)
+    try:
+        repo.create_file(
+            file_name, "Uploaded New Plugin", commit_data, branch="master"
+        )
+        print("Committed File")
+        ccess = Config.GIT_REPO_NAME
+        ccess = ccess.strip()
+        await Meowbot.edit(
+            f"`Commited On Your Github Repo`\n\n[Your STDPLUGINS](https://github.com/{ccess}/tree/master/userbot/plugins/)"
+        )
+    except:
+        print("Cannot Create Plugin")
+        await eod(Meowbot, "Cannot Upload Plugin")
 
 
 @bot.on(mew_cmd(pattern="github (.*)", outgoing=True))
@@ -89,7 +85,7 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    url = "https://api.github.com/users/{}".format(input_str)
+    url = f"https://api.github.com/users/{input_str}"
     r = requests.get(url)
     if r.status_code != 404:
         b = r.json()
@@ -120,7 +116,7 @@ Profile Created: {}""".format(
         )
         await event.delete()
     else:
-        await eor(event, "`{}`: {}".format(input_str, r.text))
+        await eor(event, f"`{input_str}`: {r.text}")
 
 
 CmdHelp("github").add_command(

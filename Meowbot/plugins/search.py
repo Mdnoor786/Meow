@@ -9,13 +9,9 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    sample_url = (
-        "https://da.gd/s?url=https://www.youtube.com/results?search_query={}".format(
-            input_str.replace(" ", "+")
-        )
-    )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    sample_url = f'https://da.gd/s?url=https://www.youtube.com/results?search_query={input_str.replace(" ", "+")}'
+
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(
             event,
             "Let me **UThoob** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
@@ -32,13 +28,9 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    sample_url = (
-        "https://da.gd/s?url=https://duckduckgo.com/?q={}&t=h_&ia=about".format(
-            input_str.replace(" ", "+")
-        )
-    )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    sample_url = f'https://da.gd/s?url=https://duckduckgo.com/?q={input_str.replace(" ", "+")}&t=h_&ia=about'
+
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(
             event,
             "Let me **duckduckgo** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
@@ -55,11 +47,9 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/s?url=https://www.altnews.in/?s={}".format(
-        input_str.replace(" ", "+")
-    )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    sample_url = f'https://da.gd/s?url=https://www.altnews.in/?s={input_str.replace(" ", "+")}'
+
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(
             event,
             "Let me **altnews** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
@@ -76,13 +66,9 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    sample_url = (
-        "https://da.gd/s?url=https://dashboard.heroku.com/apps/{}/settings".format(
-            input_str.replace(" ", "+")
-        )
-    )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    sample_url = f'https://da.gd/s?url=https://dashboard.heroku.com/apps/{input_str.replace(" ", "+")}/settings'
+
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(
             event,
             "Let me **var** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
@@ -99,11 +85,9 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/s?url=https://dashboard.heroku.com/apps/{}/logs".format(
-        input_str.replace(" ", "+")
-    )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    sample_url = f'https://da.gd/s?url=https://dashboard.heroku.com/apps/{input_str.replace(" ", "+")}/logs'
+
+    if response_api := requests.get(sample_url).text:
         await eor(
             event,
             "Let me **log** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
@@ -120,11 +104,9 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/s?url=https://dashboard.heroku.com/account/{}".format(
-        input_str.replace(" ", "+")
-    )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    sample_url = f'https://da.gd/s?url=https://dashboard.heroku.com/account/{input_str.replace(" ", "+")}'
+
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(
             event,
             "Let me **Heroku Account** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
@@ -141,11 +123,9 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/s?url=https://indiankanoon.org/search/?formInput={}+sortby%3Amostrecent".format(
-        input_str.replace(" ", "+")
-    )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    sample_url = f'https://da.gd/s?url=https://indiankanoon.org/search/?formInput={input_str.replace(" ", "+")}+sortby%3Amostrecent'
+
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(
             event,
             "Let me **Indiankanoon.com : Place** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
@@ -162,11 +142,9 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/s?url=https://mkp.gem.gov.in/search?q={}&sort_type=created_at_desc&_xhr=1".format(
-        input_str.replace(" ", "+")
-    )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    sample_url = f'https://da.gd/s?url=https://mkp.gem.gov.in/search?q={input_str.replace(" ", "+")}&sort_type=created_at_desc&_xhr=1'
+
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(
             event,
             "Let me **gem.gov.in** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
@@ -183,11 +161,9 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/s?url=https://web.archive.org/web/*/{}".format(
-        input_str.replace(" ", "+")
-    )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    sample_url = f'https://da.gd/s?url=https://web.archive.org/web/*/{input_str.replace(" ", "+")}'
+
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(
             event,
             "Let me run your link on wayback machine that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(

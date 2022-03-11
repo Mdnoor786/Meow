@@ -34,10 +34,9 @@ async def _(event):
                 )
             )
             await event.edit(
-                "Group `{}` created successfully. Join {}".format(
-                    group_name, result.link
-                )
+                f"Group `{group_name}` created successfully. Join {result.link}"
             )
+
         except Exception as e:  # pylint:disable=C0103,W0703
             await event.edit(str(e))
     elif type_of_group in ["g", "c"]:
@@ -57,10 +56,9 @@ async def _(event):
                 )
             )
             await event.edit(
-                "Channel `{}` created successfully. Join {}".format(
-                    group_name, result.link
-                )
+                f"Channel `{group_name}` created successfully. Join {result.link}"
             )
+
         except Exception as e:  # pylint:disable=C0103,W0703
             await event.edit(str(e))
     else:
@@ -93,7 +91,7 @@ async def get_user_from_event(event):
     """Get the user from argument or replied message."""
     args = event.pattern_match.group(1).split(":", 1)
     extra = None
-    if event.reply_to_msg_id and not len(args) == 2:
+    if event.reply_to_msg_id and len(args) != 2:
         previous_message = await event.get_reply_message()
         user_obj = await event.client.get_entity(previous_message.sender_id)
         extra = event.pattern_match.group(1)

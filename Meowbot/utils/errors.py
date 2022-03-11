@@ -15,15 +15,16 @@ def errors_handler(func):
             date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
             new = {"error": str(sys.exc_info()[1]), "date": datetime.datetime.now()}
 
-            text = "**ℳêøաɮøƚ CRASH REPORT**\n\n"
-
             link = "[here](https://t.me/ForGo10God)"
-            text += "If you wanna you can report it"
+            text = "**ℳêøաɮøƚ CRASH REPORT**\n\n" + "If you wanna you can report it"
             text += f"- just forward this message {link}.\n"
             text += "Nothing is logged except the fact of error and date\n"
 
-            ftext = "\nDisclaimer:\nThis file is uploaded ONLY here,"
-            ftext += "\nwe logged only fact of error and date,"
+            ftext = (
+                "\nDisclaimer:\nThis file is uploaded ONLY here,"
+                + "\nwe logged only fact of error and date,"
+            )
+
             ftext += "\nwe respect your privacy,"
             ftext += "\nyou may not report this error if you've"
             ftext += "\nany confidential data here, no one will see your data\n\n"

@@ -192,8 +192,9 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
         heroku_git_url = heroku_app.git_url.replace(
-            "https://", "https://api:" + HEROKU_API_KEY + "@"
+            "https://", f"https://api:{HEROKU_API_KEY}@"
         )
+
         if "heroku" in repo.remotes:
             remote = repo.remote("heroku")
             remote.set_url(heroku_git_url)
@@ -228,7 +229,7 @@ async def upstream(event):
     )
     off_repo = "https://github.com/TeamMew/MeowBot"
     os.chdir("/app")
-    git_mew = f"rm -rf .git"
+    git_mew = "rm -rf .git"
     try:
         await runner.runcmd(git_mew)
     except BaseException:

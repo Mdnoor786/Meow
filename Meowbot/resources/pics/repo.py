@@ -1,7 +1,7 @@
 from Meowbot.helpers import *
 
 Chakka = "You"
-Print(f"Teri vhen ki .....")
+Print("Teri vhen ki .....")
 
 """
 Bhag ja madarchod

@@ -7,7 +7,7 @@ from . import *
 async def get_full_user(event):
     args = event.pattern_match.group(1).split(":", 1)
     extra = None
-    if event.reply_to_msg_id and not len(args) == 2:
+    if event.reply_to_msg_id and len(args) != 2:
         previous_message = await event.get_reply_message()
         user_obj = await event.client.get_entity(previous_message.sender_id)
         extra = event.pattern_match.group(1)
@@ -51,7 +51,7 @@ async def _(Meowevent):
     await Meowevent.get_sender()
     me = await Meowevent.client.get_me()
     Meow = await eor(Meowevent, "`Promoting globally...`")
-    my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
+    my_mention = f"[{me.first_name}](tg://user?id={me.id})"
     f"@{me.username}" if me.username else my_mention
     await Meowevent.get_chat()
     if Meowevent.is_private:
@@ -93,7 +93,7 @@ async def _(Meowevent):
             except:
                 pass
     else:
-        await Meow.edit(f"**Reply to a user !!**")
+        await Meow.edit("**Reply to a user !!**")
     await Meow.edit(
         f"[{user.first_name}](tg://user?id={user.id}) **Was Promoted Globally In** `{i}` **Chats !!**"
     )
@@ -110,7 +110,7 @@ async def _(Meowevent):
     await Meowevent.get_sender()
     me = await Meowevent.client.get_me()
     Meow = await eor(Meowevent, "`Demoting Globally...`")
-    my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
+    my_mention = f"[{me.first_name}](tg://user?id={me.id})"
     f"@{me.username}" if me.username else my_mention
     await Meowevent.get_chat()
     if Meowevent.is_private:
@@ -152,7 +152,7 @@ async def _(Meowevent):
             except:
                 pass
     else:
-        await Meow.edit(f"**Reply to a user !!**")
+        await Meow.edit("**Reply to a user !!**")
     await Meow.edit(
         f"[{user.first_name}](tg://user?id={user.id}) **Was Demoted Globally In** `{i}` **Chats !!**"
     )

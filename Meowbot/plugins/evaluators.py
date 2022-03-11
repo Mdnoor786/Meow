@@ -25,10 +25,7 @@ async def _(event):
     stdout, stderr = await process.communicate()
     result = str(stdout.decode().strip()) + str(stderr.decode().strip())
     mewuser = await event.client.get_me()
-    if mewuser.username:
-        curruser = mewuser.username
-    else:
-        curruser = "Meowbot"
+    curruser = mewuser.username or "Meowbot"
     uid = os.geteuid()
     if uid == 0:
         cresult = f"`{curruser}:~#` `{cmd}`\n`{result}`"
@@ -88,9 +85,12 @@ async def aexec(code, smessatatus):
     p = lambda _x: print(yaml_format(_x))
     reply = await event.get_reply_message()
     exec(
-        f"async def __aexec(message, event , reply, client, p, chat): "
-        + "".join(f"\n {l}" for l in code.split("\n"))
+        (
+            "async def __aexec(message, event , reply, client, p, chat): "
+            + "".join(f"\n {l}" for l in code.split("\n"))
+        )
     )
+
     return await locals()["__aexec"](
         message, event, reply, message.client, p, message.chat_id
     )
@@ -103,9 +103,7 @@ async def _(event):
         return
     PROCESS_RUN_TIME = 100
     cmd = event.pattern_match.group(1)
-    reply_to_id = event.message.id
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
+    reply_to_id = event.reply_to_msg_id or event.message.id
     time.time() + PROCESS_RUN_TIME
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE

@@ -32,7 +32,7 @@ async def get_media(event):
     output = str(output)
     output = output.replace("b'", "")
     output = output.replace("\n'", "")
-    await event.edit("Downloaded " + output + " files.")
+    await event.edit(f"Downloaded {output} files.")
 
 
 @bot.on(mew_cmd(pattern=r"geta"))
@@ -62,7 +62,7 @@ async def get_media(event):
     output = str(output)
     output = output.replace("b'", "")
     output = output.replace("\n'", "")
-    await event.edit("Downloaded " + output + " files.")
+    await event.edit(f"Downloaded {output} files.")
 
 
 CmdHelp("chnl_dwl").add_command(

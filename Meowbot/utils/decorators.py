@@ -31,10 +31,10 @@ def mew_cmd(pattern=None, command=None, **args):
                 CMD_LIST.update({file_test: [cmd]})
         else:
             if len(Config.HANDLER) == 2:
-                mewreg = "^" + Config.HANDLER
+                mewreg = f"^{Config.HANDLER}"
                 reg = Config.HANDLER[1]
             elif len(Config.HANDLER) == 1:
-                mewreg = "^\\" + Config.HANDLER
+                mewreg = f"^\\{Config.HANDLER}"
                 reg = Config.HANDLER
             args["pattern"] = re.compile(mewreg + pattern)
             if command is not None:
@@ -64,8 +64,7 @@ def mew_cmd(pattern=None, command=None, **args):
     # blacklisted chats.
     # Meowbot will not respond in these chats.
     args["blacklist_chats"] = True
-    black_list_chats = list(Config.BL_CHAT)
-    if black_list_chats:
+    if black_list_chats := list(Config.BL_CHAT):
         args["chats"] = black_list_chats
 
     # blacklisted chats.
@@ -99,10 +98,10 @@ def sudo_cmd(pattern=None, command=None, **args):
                 SUDO_LIST.update({file_test: [cmd]})
         else:
             if len(Config.SUDO_HANDLER) == 2:
-                mewreg = "^" + Config.SUDO_HANDLER
+                mewreg = f"^{Config.SUDO_HANDLER}"
                 reg = Config.SUDO_HANDLER[1]
             elif len(Config.SUDO_HANDLER) == 1:
-                mewreg = "^\\" + Config.SUDO_HANDLER
+                mewreg = f"^\\{Config.SUDO_HANDLER}"
                 reg = Config.HANDLER
             args["pattern"] = re.compile(mewreg + pattern)
             if command is not None:
@@ -129,8 +128,7 @@ def sudo_cmd(pattern=None, command=None, **args):
     # blacklisted chats
     # Meowbot won't respond here
     args["blacklist_chats"] = True
-    black_list_chats = list(Config.BL_CHAT)
-    if black_list_chats:
+    if black_list_chats := list(Config.BL_CHAT):
         args["chats"] = black_list_chats
     # blacklisted chats
     # Meowbot won't respond here

@@ -54,7 +54,7 @@ async def on_pm_click(event):
 
 @bot.on(events.ChatAction())
 async def forcesub(event):
-    if all_fsub() == None:
+    if all_fsub() is None:
         return
     if not (event.user_joined or event.user_added):
         return
@@ -98,7 +98,7 @@ async def _(event):
             event, "⚠️ **Error !** \n\nChannel ID invalid. Please Recheck It !"
         )
     if not str(hunter).startswith("-100"):
-        hunter = int("-100" + str(hunter))
+        hunter = int(f"-100{str(hunter)}")
     add_fsub(event.chat_id, hunter)
     await eor(event, "Implementing **Force Subscribe** In This Channel !!")
 

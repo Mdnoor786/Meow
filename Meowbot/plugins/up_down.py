@@ -47,18 +47,19 @@ async def labstack(event):
     )
     r2json = json.loads(r2.text)
 
-    url = "https://up.labstack.com/api/v1/links/{}/send".format(r2json["code"])
+    url = f'https://up.labstack.com/api/v1/links/{r2json["code"]}/send'
     max_days = 7
     command_to_exec = [
         "curl",
         "-F",
-        "files=@" + filebase,
+        f"files=@{filebase}",
         "-H",
         "Transfer-Encoding: chunked",
         "-H",
         "Up-User-ID: IZfFbjUcgoo3Ao3m",
         url,
     ]
+
     try:
         logger.info(command_to_exec)
         t_response = subprocess.check_output(command_to_exec, stderr=subprocess.STDOUT)
@@ -68,9 +69,10 @@ async def labstack(event):
         return
     else:
         logger.info(t_response)
-        t_response_arry = "https://up.labstack.com/api/v1/links/{}/receive".format(
-            r2json["code"]
+        t_response_arry = (
+            f'https://up.labstack.com/api/v1/links/{r2json["code"]}/receive'
         )
+
     await eor(
         event, t_response_arry + "\nMax Days:" + str(max_days), link_preview=False
     )
@@ -85,17 +87,14 @@ async def uploadir(udir_event):
         await udir_event.edit("Downloading Using Userbot Server....")
         lst_of_files = []
         for r, d, f in os.walk(input_str):
-            for file in f:
-                lst_of_files.append(os.path.join(r, file))
-            for file in d:
-                lst_of_files.append(os.path.join(r, file))
+            lst_of_files.extend(os.path.join(r, file) for file in f)
+            lst_of_files.extend(os.path.join(r, file) for file in d)
         LOGS.info(lst_of_files)
         uploaded = 0
         await udir_event.edit(
-            "Found {} files. Uploading will start soon. Please wait!".format(
-                len(lst_of_files)
-            )
+            f"Found {len(lst_of_files)} files. Uploading will start soon. Please wait!"
         )
+
         for single_file in lst_of_files:
             if os.path.exists(single_file):
                 # https://stackoverflow.com/a/678242/4723940
@@ -159,7 +158,7 @@ async def uploadir(udir_event):
                 os.remove(single_file)
                 uploaded = uploaded + 1
         await udir_event.delete()
-        await udir_event.edit("Uploaded {} files successfully !!".format(uploaded))
+        await udir_event.edit(f"Uploaded {uploaded} files successfully !!")
     else:
         await udir_event.edit("404: Directory Not Found")
 
@@ -170,8 +169,8 @@ async def upload(u_event):
     """For .upload command, allows you to upload a file from the userbot's server"""
     await u_event.edit("Processing ...")
     input_str = u_event.pattern_match.group(1)
-    cap = "Chala Jaa Bhosdike. Hack hona h kya tujhe"
     if input_str in ("BOT_TOKEN.session", "config.env"):
+        cap = "Chala Jaa Bhosdike. Hack hona h kya tujhe"
         await bot.send_file(u_event.chat_id, cjb, caption=cap)
         await u_event.delete()
         return
@@ -202,10 +201,15 @@ def get_video_thumb(file, output=None, width=90):
             file,
             "-ss",
             str(
-                int((0, metadata.get("duration").seconds)[metadata.has("duration")] / 2)
+                int(
+                    (0, metadata.get("duration").seconds)[
+                        metadata.has("duration")
+                    ]
+                    / 2
+                )
             ),
             "-filter:v",
-            "scale={}:-1".format(width),
+            f"scale={width}:-1",
             "-vframes",
             "1",
             output,
@@ -213,6 +217,7 @@ def get_video_thumb(file, output=None, width=90):
         stdout=subprocess.PIPE,
         stderr=subprocess.DEVNULL,
     )
+
     if not popen.returncode and os.path.lexists(file):
         return output
     return None
@@ -252,12 +257,12 @@ async def uploadas(uas_event):
     supports_streaming = False
     round_message = False
     spam_big_messages = False
-    if type_of_upload == "stream":
-        supports_streaming = True
-    if type_of_upload == "vn":
-        round_message = True
     if type_of_upload == "all":
         spam_big_messages = True
+    elif type_of_upload == "stream":
+        supports_streaming = True
+    elif type_of_upload == "vn":
+        round_message = True
     input_str = uas_event.pattern_match.group(2)
     thumb = None
     file_name = None
@@ -271,15 +276,9 @@ async def uploadas(uas_event):
         thumb = get_video_thumb(file_name, output=thumb_path)
     if os.path.exists(file_name):
         metadata = extractMetadata(createParser(file_name))
-        duration = 0
-        width = 0
-        height = 0
-        if metadata.has("duration"):
-            duration = metadata.get("duration").seconds
-        if metadata.has("width"):
-            width = metadata.get("width")
-        if metadata.has("height"):
-            height = metadata.get("height")
+        duration = metadata.get("duration").seconds if metadata.has("duration") else 0
+        width = metadata.get("width") if metadata.has("width") else 0
+        height = metadata.get("height") if metadata.has("height") else 0
         try:
             if supports_streaming:
                 c_time = time.time()
@@ -388,10 +387,11 @@ async def _(event):
             percentage = downloader.get_progress() * 100
             downloader.get_speed()
             progress_str = "`{0}{1} {2}`%".format(
-                "".join(["▰" for i in range(math.floor(percentage / 5))]),
-                "".join(["▱" for i in range(20 - math.floor(percentage / 5))]),
+                "".join(["▰" for _ in range(math.floor(percentage / 5))]),
+                "".join(["▱" for _ in range(20 - math.floor(percentage / 5))]),
                 round(percentage, 2),
             )
+
             estimated_total_time = downloader.get_eta(human=True)
             try:
                 current_message = f"Downloading the file\

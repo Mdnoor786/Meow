@@ -69,9 +69,9 @@ async def _(event):
 
     output_ = f"**Movie:**\n`{title}`\n**Release Date:**\n`{release_date}`"
     if imdb_score:
-        output_ = output_ + f"\n**IMDB: **{imdb_score}"
+        output_ = f"{output_}\n**IMDB: **{imdb_score}"
     if tmdb_score:
-        output_ = output_ + f"\n**TMDB: **{tmdb_score}"
+        output_ = f"{output_}\n**TMDB: **{tmdb_score}"
 
     output_ = output_ + "\n\n**Available on:**\n"
     for provider, link in stream_providers.items():
@@ -109,9 +109,7 @@ async def google(event):
         des = got["descriptions"][i]
         output += f" 👉🏻  [{text}]({url})\n`{des}`\n\n"
     res = f"**Google Search Query:**\n`{input_str}`\n\n**Results:**\n{output}"
-    see = []
-    for i in range(0, len(res), 4095):
-        see.append(res[i : i + 4095])
+    see = [res[i : i + 4095] for i in range(0, len(res), 4095)]
     for j in see:
         await bot.send_message(event.chat_id, j, link_preview=False)
     await Meow.delete()
@@ -153,17 +151,17 @@ async def _(event):
     if event.fwd_from:
         return
     start = datetime.datetime.now()
-    BASE_URL = "http://www.google.com"
     OUTPUT_STR = "Reply to an image to do Google Reverse Search"
     if event.reply_to_msg_id:
         Meow = await eor(event, "Pre Processing Media")
         previous_message = await event.get_reply_message()
         previous_message_text = previous_message.message
+        BASE_URL = "http://www.google.com"
         if previous_message.media:
             downloaded_file_name = await bot.download_media(
                 previous_message, Config.TMP_DOWNLOAD_DIRECTORY
             )
-            SEARCH_URL = "{}/searchbyimage/upload".format(BASE_URL)
+            SEARCH_URL = f"{BASE_URL}/searchbyimage/upload"
             multipart = {
                 "encoded_image": (
                     downloaded_file_name,
@@ -222,9 +220,7 @@ async def gps(event):
     await edit_or_reply(event, "Finding😁")
 
     geolocator = Nominatim(user_agent="Meowbot")
-    geoloc = geolocator.geocode(input_str)
-
-    if geoloc:
+    if geoloc := geolocator.geocode(input_str):
         lon = geoloc.longitude
         lat = geoloc.latitude
         await reply_to_id.reply(

@@ -40,8 +40,10 @@ async def tor_search(event):
         )
     else:
         res = requests.get(
-            "https://www.torrentdownloads.me/search/?search=" + search_str, headers
+            f"https://www.torrentdownloads.me/search/?search={search_str}",
+            headers,
         )
+
     source = bs(res.text, "lxml")
     urls = []
     magnets = []
@@ -53,11 +55,7 @@ async def tor_search(event):
             title = title[20:]
             titles.append(title)
             urls.append("https://www.torrentdownloads.me" + div.p.a["href"])
-        except KeyError:
-            pass
-        except TypeError:
-            pass
-        except AttributeError:
+        except (KeyError, TypeError, AttributeError):
             pass
         if counter == 15:
             break
@@ -84,11 +82,9 @@ async def tor_search(event):
     counter = 0
     while counter != len(titles):
         msg = (
-            msg
-            + "⁍ [{}]".format(titles[counter])
-            + "({})".format(shorted_links[counter])
-            + "\n\n"
-        )
+            (msg + f"⁍ [{titles[counter]}]") + f"({shorted_links[counter]})"
+        ) + "\n\n"
+
         counter += 1
     await Meow.edit(msg, link_preview=False)
 
@@ -141,7 +137,7 @@ async def _(event):
 
 def search_idop_se(search_query):
     r = []
-    url = "https://idope.se/search/{}/".format(search_query)
+    url = f"https://idope.se/search/{search_query}/"
     raw_json = requests.get(url).json()
     results = raw_json["result"]["items"]
     for item in results:
@@ -166,7 +162,7 @@ def search_idop_se(search_query):
 
 def search_torrentz_eu(search_query):
     r = []
-    url = "https://torrentz2eu.org/searchA?safe=1&f=" + search_query + ""
+    url = f"https://torrentz2eu.org/searchA?safe=1&f={search_query}"
     scraper = cfscrape.create_scraper()  # returns a CloudflareScraper instance
     raw_html = scraper.get(url).content
     # print(raw_html)

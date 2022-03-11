@@ -25,13 +25,13 @@ if Config.TAG_LOGGER:
         mewm = f"[{get_display_name(mew)}](tg://user?id={mew.id})"
         where_ = await event.client.get_entity(event.chat_id)
         where_m = get_display_name(where_)
-        button_text = "See the tag 📬"
         if isinstance(where_, Channel):
             message_link = f"https://t.me/c/{where_.id}/{event.id}"
         else:
             message_link = f"tg://openmessage?chat_id={where_.id}&message_id={event.id}"
         ammoca_message += f"👆 #TAG\n\n{mewm} `just tagged you...` \nWhere?\nIn [{where_m}]({message_link})\n__Tap to go the tagged msg__📬🚶"
         if tagger is not None:
+            button_text = "See the tag 📬"
             await bot.send_message(
                 entity=tagger,
                 message=ammoca_message,

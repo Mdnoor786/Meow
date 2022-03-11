@@ -19,24 +19,23 @@ async def reply_id(event):
 
 def media_type(message):
     if message and message.photo:
-        media = "Photo"
+        return "Photo"
     elif message and message.audio:
-        media = "Audio"
+        return "Audio"
     elif message and message.voice:
-        media = "Voice"
+        return "Voice"
     elif message and message.video_note:
-        media = "Round Video"
+        return "Round Video"
     elif message and message.gif:
-        media = "Gif"
+        return "Gif"
     elif message and message.sticker:
-        media = "Sticker"
+        return "Sticker"
     elif message and message.video:
-        media = "Video"
+        return "Video"
     elif message and message.document:
-        media = "Document"
+        return "Document"
     else:
-        media = None
-    return media
+        return None
 
 
 @bot.on(mew_cmd(pattern="tsave$"))
@@ -105,7 +104,7 @@ async def ff_mpeg_trim_cmd(event):
             end_time,
         )
         if o is None:
-            return await eod(mewevent, f"**Error : **`Can't complete the process`")
+            return await eod(mewevent, "**Error : **`Can't complete the process`")
         try:
             c_time = time.time()
             await event.client.send_file(
@@ -130,7 +129,7 @@ async def ff_mpeg_trim_cmd(event):
             FF_MPEG_DOWN_LOAD_MEDIA_PATH, Config.TMP_DOWNLOAD_DIRECTORY, start_time
         )
         if o is None:
-            return await eod(mewevent, f"**Error : **`Can't complete the process`")
+            return await eod(mewevent, "**Error : **`Can't complete the process`")
         try:
             c_time = time.time()
             await event.client.send_file(
@@ -186,7 +185,7 @@ async def ff_mpeg_trim_cmd(event):
             out_put_file_name,
         )
         if o is None:
-            return await eod(mewevent, f"**Error : **`Can't complete the process`")
+            return await eod(mewevent, "**Error : **`Can't complete the process`")
         try:
             c_time = time.time()
             await event.client.send_file(

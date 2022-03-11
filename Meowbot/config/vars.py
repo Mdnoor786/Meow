@@ -4,10 +4,7 @@ import os
 
 ENV = bool(os.environ.get("ENV", False))
 
-if ENV:
+if not ENV and os.path.exists("config.py") or ENV:
     pass
-else:
-    if os.path.exists("config.py"):
-        pass
 
 # Meowbot

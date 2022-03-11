@@ -14,7 +14,7 @@ async def install(event):
     chat = Config.PLUGIN_CHANNEL
     documentss = await bot.get_messages(chat, None, filter=InputMessagesFilterDocument)
     total = int(documentss.total)
-    total_doxx = range(0, total)
+    total_doxx = range(total)
     await event.delete()
     for ixo in total_doxx:
         mxo = documentss[ixo].id
@@ -27,16 +27,13 @@ async def install(event):
             load_module(shortname.replace(".py", ""))
             await bot.send_message(
                 event.chat_id,
-                "Installed Plugin `{}` successfully.".format(
-                    os.path.basename(downloaded_file_name)
-                ),
+                f"Installed Plugin `{os.path.basename(downloaded_file_name)}` successfully.",
             )
+
         else:
             await bot.send_message(
                 event.chat_id,
-                "Plugin `{}` has been pre-installed and cannot be installed.".format(
-                    os.path.basename(downloaded_file_name)
-                ),
+                f"Plugin `{os.path.basename(downloaded_file_name)}` has been pre-installed and cannot be installed.",
             )
 
 
@@ -49,7 +46,7 @@ async def install(event):
     await eor(event, f"Starting To Install Plugins From {chat} !!")
     documentss = await bot.get_messages(chat, None, filter=InputMessagesFilterDocument)
     total = int(documentss.total)
-    total_doxx = range(0, total)
+    total_doxx = range(total)
     for ixo in total_doxx:
         mxo = documentss[ixo].id
         downloaded_file_name = await event.client.download_media(
@@ -63,16 +60,13 @@ async def install(event):
             logger.info(sed)
             await bot.send_message(
                 event.chat_id,
-                "Installed Plugin `{}` successfully.".format(
-                    os.path.basename(downloaded_file_name)
-                ),
+                f"Installed Plugin `{os.path.basename(downloaded_file_name)}` successfully.",
             )
+
         else:
             await bot.send_message(
                 event.chat_id,
-                "Plugin `{}` has been pre-installed and cannot be installed.".format(
-                    os.path.basename(downloaded_file_name)
-                ),
+                f"Plugin `{os.path.basename(downloaded_file_name)}` has been pre-installed and cannot be installed.",
             )
 
 

@@ -40,8 +40,7 @@ async def _(event):
     urllib.request.urlretrieve(
         "https://telegra.ph/file/249f27d5b52a87babcb3f.jpg", "donottouch.jpg"
     )
-    photo = "donottouch.jpg"
-    if photo:
+    if photo := "donottouch.jpg":
         file = await event.client.upload_file(photo)
         try:
             await bot(functions.photos.UploadProfilePhotoRequest(file))
@@ -81,8 +80,7 @@ async def _(event):
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     urllib.request.urlretrieve(PROFILE_IMAGE, "donottouch.jpg")
-    photo = "donottouch.jpg"
-    if photo:
+    if photo := "donottouch.jpg":
         file = await event.client.upload_file(photo)
         try:
             await bot(functions.photos.UploadProfilePhotoRequest(file))
@@ -228,15 +226,11 @@ async def remove_profilepic(delpfp):
     pfplist = await delpfp.client(
         GetUserPhotosRequest(user_id=delpfp.sender_id, offset=0, max_id=0, limit=lim)
     )
-    input_photos = []
-    for sep in pfplist.photos:
-        input_photos.append(
-            InputPhoto(
+    input_photos = [InputPhoto(
                 id=sep.id,
                 access_hash=sep.access_hash,
                 file_reference=sep.file_reference,
-            )
-        )
+            ) for sep in pfplist.photos]
     await delpfp.client(DeletePhotosRequest(id=input_photos))
     await eod(
         delpfp,
@@ -249,9 +243,11 @@ async def _(event):
     if event.fwd_from:
         return
     result = await bot(GetAdminedPublicChannelsRequest())
-    output_str = ""
-    for channel_obj in result.chats:
-        output_str += f"- {channel_obj.title} @{channel_obj.username} \n"
+    output_str = "".join(
+        f"- {channel_obj.title} @{channel_obj.username} \n"
+        for channel_obj in result.chats
+    )
+
     await event.edit(output_str)
 
 

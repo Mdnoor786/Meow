@@ -11,7 +11,7 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     shiiinabot = "\u2060"
-    for i in range(601):
+    for _ in range(601):
         shiiinabot += "\u2060"
     try:
         await eor(event, shiiinabot)
@@ -23,8 +23,8 @@ async def _(event):
     await eor(event, typing_symbol)
     await asyncio.sleep(DELAY_BETWEEN_EDITS)
     for character in input_str:
-        previous_text = previous_text + "" + character
-        typing_text = previous_text + "" + typing_symbol
+        previous_text = f'{previous_text}{character}'
+        typing_text = f'{previous_text}{typing_symbol}'
         try:
             await eor(event, typing_text)
         except Exception as e:
@@ -43,7 +43,7 @@ async def _(event):
     if event.fwd_from:
         return
     animation_interval = 0.3
-    animation_ttl = range(0, 16)
+    animation_ttl = range(16)
     input_str = event.pattern_match.group(1)
     if input_str == "shrug":
         await eor(event, "¯\_(ツ)_/¯")
@@ -63,8 +63,8 @@ async def _(event):
             await event.edit(animation_chars[i % 2])
 
 
-@bot.on(mew_cmd(pattern=f"gendar$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"gendar$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="gendar$", outgoing=True))
+@bot.on(sudo_cmd(pattern="gendar$", allow_sudo=True))
 async def metoo(e):
     if e.fwd_from:
         return
@@ -72,8 +72,8 @@ async def metoo(e):
     await edit_or_reply(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"shrug$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"shrug$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="shrug$", outgoing=True))
+@bot.on(sudo_cmd(pattern="shrug$", allow_sudo=True))
 async def metoo(e):
     if e.fwd_from:
         return
@@ -81,8 +81,8 @@ async def metoo(e):
     await edit_or_reply(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"doge", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"doge", allow_sudo=True))
+@bot.on(mew_cmd(pattern="doge", outgoing=True))
+@bot.on(sudo_cmd(pattern="doge", allow_sudo=True))
 async def metoo(e):
     if e.fwd_from:
         return
@@ -90,8 +90,8 @@ async def metoo(e):
     await edit_or_reply(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"mesed$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"mesed$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="mesed$", outgoing=True))
+@bot.on(sudo_cmd(pattern="mesed$", allow_sudo=True))
 async def metoo(e):
     if e.fwd_from:
         return
@@ -99,8 +99,8 @@ async def metoo(e):
     await edit_or_reply(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"medead$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"medead$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="medead$", outgoing=True))
+@bot.on(sudo_cmd(pattern="medead$", allow_sudo=True))
 async def metoo(e):
     if e.fwd_from:
         return
@@ -108,8 +108,8 @@ async def metoo(e):
     await edit_or_reply(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"confused$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"confused$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="confused$", outgoing=True))
+@bot.on(sudo_cmd(pattern="confused$", allow_sudo=True))
 async def metoo(e):
     if e.fwd_from:
         return
@@ -117,8 +117,8 @@ async def metoo(e):
     await edit_or_reply(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"lobb$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"lobb$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="lobb$", outgoing=True))
+@bot.on(sudo_cmd(pattern="lobb$", allow_sudo=True))
 async def metoo(e):
     if e.fwd_from:
         return
@@ -126,8 +126,8 @@ async def metoo(e):
     await edit_or_reply(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"wut$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"wut$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="wut$", outgoing=True))
+@bot.on(sudo_cmd(pattern="wut$", allow_sudo=True))
 async def metoo(e):
     if e.fwd_from:
         return
@@ -135,8 +135,8 @@ async def metoo(e):
     await edit_or_reply(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"wavee$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"wavee$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="wavee$", outgoing=True))
+@bot.on(sudo_cmd(pattern="wavee$", allow_sudo=True))
 async def metoo(e):
     if e.fwd_from:
         return
@@ -144,8 +144,8 @@ async def metoo(e):
     await edit_or_reply(e, txt)
 
 
-@bot.on(mew_cmd(pattern=f"hehe$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"hehe$", allow_sudo=True))
+@bot.on(mew_cmd(pattern="hehe$", outgoing=True))
+@bot.on(sudo_cmd(pattern="hehe$", allow_sudo=True))
 async def metoo(e):
     if e.fwd_from:
         return

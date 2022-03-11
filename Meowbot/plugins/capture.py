@@ -41,9 +41,7 @@ async def _(event):
         im_png = driver.get_screenshot_as_png()
         driver.close()
         await Meow.edit("Stopping Google Chrome BIN")
-        message_id = event.message.id
-        if event.reply_to_msg_id:
-            message_id = event.reply_to_msg_id
+        message_id = event.reply_to_msg_id or event.message.id
         with io.BytesIO(im_png) as out_file:
             out_file.name = "MeowBot.ScreenCapture.PNG"
             await bot.send_file(

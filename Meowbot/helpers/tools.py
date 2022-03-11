@@ -10,8 +10,6 @@ def forwards():
         async def wrapper(event):
             if event.fwd_from:
                 await func(event)
-            else:
-                pass
 
         return wrapper
 
@@ -76,9 +74,7 @@ def no_grp():
     def decorator(func):
         @functools.wraps(func)
         async def wrapper(event):
-            if event.is_group:
-                pass
-            else:
+            if not event.is_group:
                 await func(event)
 
         return wrapper

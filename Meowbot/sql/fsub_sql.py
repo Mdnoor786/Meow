@@ -40,8 +40,7 @@ def add_fsub(chat_id, channel):
 
 
 def rm_fsub(chat_id):
-    rem = SESSION.query(forceSubscribe).get(chat_id)
-    if rem:
+    if rem := SESSION.query(forceSubscribe).get(chat_id):
         SESSION.delete(rem)
         SESSION.commit()
 
