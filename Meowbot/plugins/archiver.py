@@ -223,7 +223,7 @@ async def _(event):
     elif input_str:
         directory_name = input_str
 
-        await event.edit(f'Local file compressed to `{directory_name + ".7z"}`')
+        await event.edit(f'Local file compressed to `{directory_name}.7z`')
 
 
 @bot.on(mew_cmd(pattern="tar ?(.*)"))
